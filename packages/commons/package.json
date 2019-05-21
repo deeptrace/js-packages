@@ -1,0 +1,25 @@
+{
+  "name": "@deeptrace/commons",
+  "description": "Objects shared accross projects.",
+  "version": "0.0.0",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [],
+  "homepage": "https://github.com/deeptrace/js-tools/tree/master/packages/commons/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeptrace/js-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deeptrace/js-tools/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fcommons"
+  },
+  "scripts": {
+    "lint": "standard"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
