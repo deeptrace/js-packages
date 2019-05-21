@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/appify",
   "description": "Web application factory.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "publishConfig": {
     "access": "public"
@@ -33,7 +33,7 @@
     "node": ">= 8.6.0"
   },
   "dependencies": {
-    "@deeptrace/commons": "^1.0.0",
+    "@deeptrace/commons": "^1.0.1",
     "@sentry/node": "^5.2.0",
     "body-parser": "^1.19.0",
     "debug": "^4.1.1",
