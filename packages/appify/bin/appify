@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const debug = require('debug')
+const env = require('sugar-env')
+const relative = require('require-relative')
+const serverfactory = require('../lib/server-factory.js')
+
+const argv = require('yargs')
+  .usage('Usage: $0 [app] [options]')
+  .command('$0 [app] [options]', 'Starts an HTTP server to serve you app.', (builder) => {
+    builder
+      .positional('app', { describe: 'Relative path the your app file', default: 'app.js' })
+      .default('config', null)
+      .alias('c', 'config')
+      .describe('c', 'Relative path to your config file')
+      .alias('d', 'debug')
+      .describe('d', 'Enables appify debug info')
+      .boolean('d')
+  })
+  .help('h')
+  .alias('h', 'help')
+  .argv
+
+if (argv.debug) {
+  debug.enable('appify:*')
+}
+
+const makeItRelative = (path) => {
+  return './' + path.replace(/^\.\//, '')
+}
+
+const appFactory = relative(makeItRelative(argv.app))
+const configFactory = argv.config
+  ? relative(makeItRelative(argv.config))
+  : () => ({ })
+
+serverfactory(appFactory, configFactory, env.current, console)

@@ -1,0 +1,55 @@
+{
+  "name": "@deeptrace/appify",
+  "description": "Web application factory.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "api",
+    "appify",
+    "boilerplate",
+    "express"
+  ],
+  "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [],
+  "homepage": "https://github.com/deeptrace/js-tools/tree/master/packages/appify/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeptrace/js-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deeptrace/js-tools/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fappify"
+  },
+  "bin": {
+    "appify": "./bin/appify"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --globals __SENTRY__ --recursive --throw-deprecation"
+  },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
+  "dependencies": {
+    "@deeptrace/commons": "^1.0.0",
+    "@sentry/node": "^5.2.0",
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "lodash.defaultsdeep": "^4.6.0",
+    "morgan": "^1.9.1",
+    "require-relative": "^0.8.7",
+    "spdy": "^4.0.0",
+    "sugar-env": "^1.5.7",
+    "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "axiosist": "^0.6.1",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "standard": "^12.0.1"
+  }
+}
