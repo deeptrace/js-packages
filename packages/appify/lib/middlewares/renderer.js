@@ -3,7 +3,7 @@
 const env = require('sugar-env')
 
 /**
- * @param {import('@deeptrace/commons/lib/HttpError')} err Error instance.
+ * @param {import('@deeptrace/commons').HttpError} err Error instance.
  * @param {string} environment Environment name.
  * @param {string} genericmessage Generic displayable error message.
  * @returns {string} Displayable error message.
@@ -19,7 +19,7 @@ const getMessage = (err, environment, genericmessage) => {
 }
 
 /**
- * @param {import('@deeptrace/commons/lib/HttpError')} err Error instance.
+ * @param {import('@deeptrace/commons').HttpError} err Error instance.
  * @param {string} environment Environment name.
  * @returns {string|undefined} Displayable stack.
  */
@@ -30,7 +30,7 @@ const getStack = (err, environment) => {
 }
 
 /**
- * @param {import('@deeptrace/commons/lib/HttpError')} err Error instance.
+ * @param {import('@deeptrace/commons').HttpError} err Error instance.
  * @param {string} environment Environment name.
  * @returns {Object[]|undefined} Displayable stack.
  */

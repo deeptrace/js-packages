@@ -5,7 +5,7 @@ const axiosist = require('axiosist')
 const appify = require('../lib/appify-factory.js')
 const env = require('sugar-env')
 const { expect } = require('chai')
-const { NotFoundHttpError } = require('@deeptrace/commons')
+const { UnprocessableEntityHttpError } = require('@deeptrace/commons')
 
 describe('appify', () => {
   let factoryarg
@@ -23,10 +23,13 @@ describe('appify', () => {
         next(new Error('non-http error message'))
       })
 
-      router.get('/404', (_req, _res, next) => {
-        next(new NotFoundHttpError({
+      router.get('/422', (_req, _res, next) => {
+        next(new UnprocessableEntityHttpError({
           code: 'ARBITRARY_CODE',
-          message: 'fluvers not found'
+          message: 'fluvers invalid payload',
+          details: [
+            { foo: 'bar' }
+          ]
         }))
       })
     })
@@ -90,13 +93,22 @@ describe('appify', () => {
     expect(response.data.error.message).to.be.equals('non-http error message')
   })
 
-  it('http errors gets properly rendered', async () => {
+  it('http errors gets properly rendered and details are exposed', async () => {
     const response = await api
-      .get('/404')
+      .get('/422')
+      .catch((err) => err.response)
+
+    expect(response.status).to.be.equal(422)
+    expect(response.data.error.code).to.be.equals('ARBITRARY_CODE')
+    expect(response.data.error.message).to.be.equals('fluvers invalid payload')
+    expect(response.data.error.details).to.have.length(1)
+  })
+
+  it('requesting an unregistered route results in a 404 error', async () => {
+    const response = await api
+      .get('/bla')
       .catch((err) => err.response)
 
     expect(response.status).to.be.equal(404)
-    expect(response.data.error.code).to.be.equals('ARBITRARY_CODE')
-    expect(response.data.error.message).to.be.equals('fluvers not found')
   })
 })
