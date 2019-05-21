@@ -1,0 +1,7 @@
+{
+  "name": "@deeptrace/js-tools",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.14.1"
+  }
+}
