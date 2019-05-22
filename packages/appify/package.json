@@ -12,6 +12,7 @@
     "boilerplate",
     "express"
   ],
+  "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
   "contributors": [],
   "homepage": "https://github.com/deeptrace/js-tools/tree/master/packages/appify/#readme",
