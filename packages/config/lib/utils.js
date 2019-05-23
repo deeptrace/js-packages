@@ -43,6 +43,10 @@ const formatTemplatedText = (text, replacements) => {
 }
 
 /**
+ * When there are any validation errors it catches the
+ * ConfigValidationError thrown by `config`, prints its
+ * validation error messages and then exists with status 1.
+ *
  * @param {Function} fn
  */
 const halt = (fn) => {
