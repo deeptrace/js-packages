@@ -33,6 +33,9 @@
   "engines": {
     "node": ">= 8.6.0"
   },
+  "optionalDependencies": {
+    "@deeptrace/config": "*"
+  },
   "dependencies": {
     "@deeptrace/commons": "^1.0.1",
     "@sentry/node": "^5.2.0",
