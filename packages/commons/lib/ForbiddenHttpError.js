@@ -2,10 +2,6 @@
 
 const UserFaultHttpError = require('./UserFaultHttpError.js')
 
-/**
- * @module DeepTrace.JSTools.Commons.ForbiddenHttpError
- */
-
 module.exports = class ForbiddenHttpError extends UserFaultHttpError {
   /**
    * @param {Object} params

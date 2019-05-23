@@ -2,10 +2,6 @@
 
 const InfrastructureError = require('./InfrastructureError.js')
 
-/**
- * @module DeepTrace.JSTools.Commons.HttpError
- */
-
 module.exports = class HttpError extends InfrastructureError {
   /**
    * @param {Object} params

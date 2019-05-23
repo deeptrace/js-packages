@@ -2,10 +2,6 @@
 
 const UserFaultHttpError = require('./UserFaultHttpError.js')
 
-/**
- * @module DeepTrace.JSTools.Commons.LockedHttpError
- */
-
 module.exports = class LockedHttpError extends UserFaultHttpError {
   /**
    * @param {Object} params

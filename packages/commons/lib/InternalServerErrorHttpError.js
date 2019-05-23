@@ -2,10 +2,6 @@
 
 const ServerFaultHttpError = require('./ServerFaultHttpError.js')
 
-/**
- * @module DeepTrace.JSTools.Commons.InternalServerErrorHttpError
- */
-
 module.exports = class InternalServerErrorHttpError extends ServerFaultHttpError {
   /**
    * @param {Object} params

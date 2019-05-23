@@ -1,9 +1,5 @@
 'use strict'
 
-/**
- * @module DeepTrace.JSTools.Commons.Error
- */
-
 module.exports = class extends Error {
   /**
    * @param {string} message

@@ -2,10 +2,6 @@
 
 const UserFaultHttpError = require('./UserFaultHttpError.js')
 
-/**
- * @module DeepTrace.JSTools.Commons.UnprocessableEntityHttpError
- */
-
 module.exports = class UnprocessableEntityHttpError extends UserFaultHttpError {
   /**
    * @param {Object} params
