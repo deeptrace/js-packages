@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/config",
   "description": "Configuration helper.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "publishConfig": {
     "access": "public"
@@ -29,7 +29,7 @@
     "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive --throw-deprecation"
   },
   "dependencies": {
-    "@deeptrace/commons": "^1.0.1",
+    "@deeptrace/commons": "^1.0.2",
     "sinon": "^7.3.2",
     "sugar-env": "^1.5.7"
   },
