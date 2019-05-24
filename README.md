@@ -1,3 +1,3 @@
-# DeepTrace's JS Tools
+# DeepTrace's JS Packages
 
 JavaScript multipackage repository.

@@ -16,13 +16,13 @@
   "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
   "contributors": [],
-  "homepage": "https://github.com/deeptrace/js-tools/tree/master/packages/config/#readme",
+  "homepage": "https://github.com/deeptrace/js-packages/tree/master/packages/config/#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deeptrace/js-tools.git"
+    "url": "git+https://github.com/deeptrace/js-packages.git"
   },
   "bugs": {
-    "url": "https://github.com/deeptrace/js-tools/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fconfig"
+    "url": "https://github.com/deeptrace/js-packages/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fconfig"
   },
   "scripts": {
     "lint": "standard",
