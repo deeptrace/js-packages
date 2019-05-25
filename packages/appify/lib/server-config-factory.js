@@ -1,26 +1,23 @@
 'use strict'
 
 const defaultsdeep = require('lodash.defaultsdeep')
-const env = require('sugar-env')
+const { config, halt } = require('@deeptrace/config')
 
 /**
  * @param {Object} options Custom config options factory.
  * @returns {Object} Config object.
  */
-module.exports = ({ server = { } }) => {
-  return Object.freeze(defaultsdeep(server, {
+module.exports = halt(({ server = { } }) => {
+  return Object.freeze(defaultsdeep(server, config(({ env, is, as }) => ({
     binding: {
-      socket: env.get('APPIFY_SERVER_BINDING_SOCKET'),
-      ip: env.get('APPIFY_SERVER_BINDING_IP', '0.0.0.0'),
-      port: env.get.int('APPIFY_SERVER_BINDING_PORT', 3000)
+      socket: env('APPIFY_SERVER_BINDING_SOCKET'),
+      ip: env('APPIFY_SERVER_BINDING_IP', [ is.defaultTo('0.0.0.0') ]),
+      port: env('APPIFY_SERVER_BINDING_PORT', [ is.defaultTo('3000'), as.integer() ])
     },
     spdy: {
       protocols: [ 'h2', 'spdy/3.1', 'http/1.1' ],
-      'x-forwarded-for': env.get.boolean('APPIFY_SERVER_SPDY_X_FORWARDED_FOR', true),
-      plain: env.get.boolean('APPIFY_SERVER_SPDY_PLAIN', true),
-      ssl: env.get.boolean('APPIFY_SERVER_SPDY_SSL', false),
-      key: env.get.base64('APPIFY_SERVER_SSL_KEY', undefined),
-      cert: env.get.base64('APPIFY_SERVER_SSL_CERT', undefined)
+      'x-forwarded-for': env('APPIFY_SERVER_SPDY_X_FORWARDED_FOR', [ is.defaultTo('true'), as.boolean() ]),
+      plain: env('APPIFY_SERVER_SPDY_PLAIN', [ is.defaultTo('true'), as.boolean() ])
     }
-  }))
-}
+  }))))
+})

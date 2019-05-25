@@ -10,7 +10,13 @@ const BOOLEAN_LIKE = BOOLEAN_LIKE_TRUTHY.concat(BOOLEAN_LIKE_FALSEY)
 const ERR_MESSAGE_TEMPLATE = 'Environment variable {{originEnvName}} must be a valid boolean-like string value: [ "0", "false", "1", "true" ].'
 
 /**
- * Just to keep the same signature for all middlewares.
+ * Casts a boolean-like value into a `boolean`.
+ * Acceptable boolean-like values are:
+ *    - "0"     -> `false`
+ *    - "false" -> `false`
+ *    - "1"     -> `true
+ *    - "true"  -> `true`
+ * Providing a non-empty non-boolean-like value will result in a `PropertyValueCastingError` error.
  */
 module.exports = () => {
   /**

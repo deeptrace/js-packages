@@ -1,6 +1,6 @@
 'use strict'
 
-const env = require('sugar-env')
+const { environments } = require('@deeptrace/commons')
 
 /**
  * @param {import('@deeptrace/commons').HttpError} err Error instance.
@@ -13,7 +13,7 @@ const getMessage = (err, environment, genericmessage) => {
     return err.message
   }
 
-  return environment !== 'production'
+  return environment !== environments.PRODUCTION
     ? err.message
     : genericmessage
 }
@@ -24,7 +24,7 @@ const getMessage = (err, environment, genericmessage) => {
  * @returns {string|undefined} Displayable stack.
  */
 const getStack = (err, environment) => {
-  return err.status >= 500 && environment !== env.PRODUCTION
+  return err.status >= 500 && environment !== environments.PRODUCTION
     ? err.stack
     : undefined
 }

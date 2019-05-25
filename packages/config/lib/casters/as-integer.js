@@ -1,11 +1,13 @@
 'use strict'
 
 const { isEmpty } = require('../utils.js')
-const { PropertyValueCastingError } = require('../errors.js')
 const asNumber = require('./as-number.js')
 
 /**
- * Just to keep the same signature for all middlewares.
+ * Casts a non-empty value into an `integer`.
+ * If the number has a decimal case, it will be simply dropped.
+ * For example, if value is "56.78" it will be casted as `integer` "56".
+ * Providing a non-empty non-numeric value will result in a `PropertyValueCastingError` error.
  */
 module.exports = () => {
   /**

@@ -6,7 +6,9 @@ const { PropertyValueCastingError } = require('../errors.js')
 const ERR_MESSAGE_TEMPLATE = 'Environment variable {{originEnvName}} must constain a valid numeric string.'
 
 /**
- * Just to keep the same signature for all middlewares.
+ * Casts a non-empty value into a `number`.
+ * If the number has a decimal case, it will be kept.
+ * Providing a non-empty non-numeric value will result in a `PropertyValueCastingError` error.
  */
 module.exports = () => {
   /**

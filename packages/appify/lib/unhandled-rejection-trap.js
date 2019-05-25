@@ -1,6 +1,6 @@
 'use strict'
 
-const env = require('sugar-env')
+const { environments } = require('@deeptrace/commons')
 const Sentry = require('@sentry/node')
 
 /**
@@ -9,7 +9,7 @@ const Sentry = require('@sentry/node')
  * @returns {void}
  */
 module.exports = function onUnhandledRejectionTrap (environment, logger) {
-  if (environment === env.TEST) {
+  if (environment === environments.TEST) {
     return
   }
 

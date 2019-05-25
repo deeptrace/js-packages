@@ -3,8 +3,9 @@
 const helmet = require('helmet')
 
 /**
+ * @param {Object} config
  * @return {Function} Middleware.
  */
-module.exports = () => {
-  return helmet()
+module.exports = (config) => {
+  return helmet(config)
 }

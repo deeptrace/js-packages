@@ -4,11 +4,11 @@
  * @module DeepTrace.JSTools.Appify
  */
 
-const env = require('sugar-env')
+const config = require('@deeptrace/config')
 const commons = require('@deeptrace/commons')
 const factory = require('./lib/appify-factory.js')
 
-module.exports.env = env
+module.exports.config = config
 module.exports.appify = factory
 
 module.exports.BadRequestHttpError = commons.BadRequestHttpError

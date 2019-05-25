@@ -11,8 +11,9 @@ const casters = {
 }
 
 const validators = {
+  defaultTo: require('./validators/is-default-to.js'),
   required: require('./validators/is-required.js'),
-  defaultTo: require('./validators/is-default-to.js')
+  url: require('./validators/is-url.js')
 }
 
 /**
@@ -38,7 +39,7 @@ module.exports = (fn) => {
   /**
    * @type {GetFnSignature}
    */
-  const get = (lookupNames, middlewares) => {
+  const get = (lookupNames, middlewares = []) => {
     const requestedEnvNames = iWantAnArray(lookupNames)
 
     let originalValue = null

@@ -53,7 +53,7 @@ module.exports = function factory (fn) {
     app.use(middlewares.morgan(config.morgan))
     app.use(middlewares.parsers.urlencoded())
     app.use(middlewares.parsers.json())
-    app.use(middlewares.helmet())
+    app.use(middlewares.helmet(config.helmet))
 
     await Promise.resolve(fn({ router, config, environment, logger }))
 

@@ -3,7 +3,7 @@
 
 const axiosist = require('axiosist')
 const appify = require('../lib/appify-factory.js')
-const env = require('sugar-env')
+const { environments } = require('@deeptrace/commons')
 const { expect } = require('chai')
 const { UnprocessableEntityHttpError } = require('@deeptrace/commons')
 
@@ -35,7 +35,7 @@ describe('appify', () => {
     })
 
     api = axiosist(await factory({
-      environment: env.TEST,
+      environment: environments.TEST,
       logger: {
         log: () => {},
         error: () => {}
@@ -110,5 +110,17 @@ describe('appify', () => {
       .catch((err) => err.response)
 
     expect(response.status).to.be.equal(404)
+  })
+
+  it('no-cache is enabled by default', async () => {
+    const response = await api
+      .get('/ping')
+      .catch((err) => err.response)
+
+    expect(response.headers).to.have.a.property('cache-control')
+    expect(response.headers['cache-control']).to.be.equals('no-store, no-cache, must-revalidate, proxy-revalidate')
+
+    expect(response.headers).to.have.a.property('expires')
+    expect(response.headers['expires']).to.be.equals('0')
   })
 })
