@@ -1,6 +1,6 @@
 {
   "name": "@deeptrace/appify",
-  "description": "Web application factory.",
+  "description": "Effortless opinionated API bootstrap as module.",
   "version": "1.0.7",
   "main": "index.js",
   "publishConfig": {

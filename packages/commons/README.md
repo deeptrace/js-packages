@@ -4,8 +4,55 @@
 
 A package with objects shared accross projects.
 
+You can learn more about the "why"s behind this package and DeepTrace's ecosystem [here](https://app.gitbook.com/@deeptrace/s/docs/js-packages/deeptrace-commons).
 
-## Exported objects:
+
+## How to install
+
+This is a [Node.js](https://nodejs.org/en/) module available through the [npm registry](https://www.npmjs.com).
+
+Before installing, [download and install](https://nodejs.org/en/download/) Node.js. Node.js 8.6.0 or higher is required.
+
+Installation is done using the npm install command:
+
+```sh
+npm install @deeptrace/commons
+```
+
+## How to use
+
+Comming soon...
+
+
+## Exported objects
+
+- Error
+- DomainError
+- InfrastructureError
+- HttpError
+- UserFaultHttpError
+- BadRequestHttpError
+- UnauthorizedHttpError
+- PaymentRequiredHttpError
+- ForbiddenHttpError
+- NotFoundHttpError
+- ConflictHttpError
+- GoneHttpError
+- UnprocessableEntityHttpError
+- LockedHttpError
+- TooManyRequestsHttpError
+- ServerFaultHttpError
+- InternalServerErrorHttpError
+- ServiceUnavailableHttpError
+- environments
+    - TEST
+    - REVIEW
+    - STAGING
+    - PRODUCTION
+    - DEVELOPMENT
+
+
+## Errors inheritance tree
 
 - Error
     - DomainError
@@ -25,9 +72,3 @@ A package with objects shared accross projects.
             - ServerFaultHttpError **5xx**
                 - InternalServerErrorHttpError **500**
                 - ServiceUnavailableHttpError **503**
-- environments
-    - TEST
-    - REVIEW
-    - STAGING
-    - PRODUCTION
-    - DEVELOPMENT
