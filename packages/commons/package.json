@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/commons",
   "description": "Objects shared accross projects.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.js",
   "publishConfig": {
     "access": "public"
