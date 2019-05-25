@@ -11,17 +11,23 @@ A package with objects shared accross projects.
     - DomainError
     - InfrastructureError
         - HttpError
-            - UserFaultHttpError (4xx)
-                - BadRequestHttpError (400)
-                - UnauthorizedHttpError (401)
-                - PaymentRequiredHttpError (402)
-                - ForbiddenHttpError (403)
-                - NotFoundHttpError (404)
-                - ConflictHttpError (409)
-                - GoneHttpError (410)
-                - UnprocessableEntityHttpError (422)
-                - LockedHttpError (423)
-                - TooManyRequestsHttpError (429)
-            - ServerFaultHttpError (5xx)
-                - InternalServerErrorHttpError (500)
-                - ServiceUnavailableHttpError (503)
+            - UserFaultHttpError **4xx**
+                - BadRequestHttpError **400**
+                - UnauthorizedHttpError **401**
+                - PaymentRequiredHttpError **402**
+                - ForbiddenHttpError **403**
+                - NotFoundHttpError **404**
+                - ConflictHttpError **409**
+                - GoneHttpError **410**
+                - UnprocessableEntityHttpError **422**
+                - LockedHttpError **423**
+                - TooManyRequestsHttpError **429**
+            - ServerFaultHttpError **5xx**
+                - InternalServerErrorHttpError **500**
+                - ServiceUnavailableHttpError **503**
+- environments
+    - TEST
+    - REVIEW
+    - STAGING
+    - PRODUCTION
+    - DEVELOPMENT
