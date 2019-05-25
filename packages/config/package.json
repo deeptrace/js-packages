@@ -28,6 +28,9 @@
     "lint": "standard",
     "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive --throw-deprecation"
   },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
   "dependencies": {
     "@deeptrace/commons": "^1.0.7",
     "sinon": "^7.3.2",
