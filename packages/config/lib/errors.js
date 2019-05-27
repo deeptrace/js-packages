@@ -1,8 +1,8 @@
 'use strict'
 
-const { Error } = require('@deeptrace/commons')
+const { CommonError } = require('@deeptrace/commons')
 
-class ConfigError extends Error {
+class ConfigError extends CommonError {
   //
 }
 

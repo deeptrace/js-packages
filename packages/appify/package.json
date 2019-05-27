@@ -1,6 +1,6 @@
 {
   "name": "@deeptrace/appify",
-  "description": "Effortless opinionated API bootstrap as module.",
+  "description": "Effortless opinionated API bootstrap as module",
   "version": "1.0.8",
   "main": "index.js",
   "publishConfig": {

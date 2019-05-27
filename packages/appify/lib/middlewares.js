@@ -12,8 +12,7 @@ module.exports = {
   renderer: require('./middlewares/renderer.js'),
   sentry: {
     errors: require('./middlewares/sentry-errors.js'),
-    requests: require('./middlewares/sentry-requests.js'),
-    scope: require('./middlewares/sentry-scope.js')
+    requests: require('./middlewares/sentry-requests.js')
   },
   stderr: require('./middlewares/stderr.js'),
   unmatched: require('./middlewares/unmatched.js')

@@ -1,8 +1,12 @@
 {
   "name": "@deeptrace/commons",
-  "description": "Objects shared accross projects.",
+  "description": "Objects shared accross projects",
   "version": "1.0.8",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*.*",
+    "dist/**/*.*"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -27,9 +31,11 @@
     "node": ">= 8.6.0"
   },
   "scripts": {
-    "lint": "standard"
+    "lint": "prettier -c index.ts --no-semi --single-quote --trailing-comma none lib/{**/,}*.ts",
+    "lint:fix": "prettier --write -c index.ts --no-semi --single-quote --trailing-comma none lib/{**/,}*.ts"
   },
   "devDependencies": {
-    "standard": "^12.0.1"
+    "prettier": "^1.17.1",
+    "typescript": "^3.4.5"
   }
 }

@@ -49,7 +49,6 @@ module.exports = function factory (fn) {
 
     // app.use(middlewares.deeptrace(config.deeptrace))
     app.use(middlewares.sentry.requests())
-    app.use(middlewares.sentry.scope())
     app.use(middlewares.morgan(config.morgan))
     app.use(middlewares.parsers.urlencoded())
     app.use(middlewares.parsers.json())

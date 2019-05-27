@@ -12,6 +12,18 @@ module.exports = () => {
       return next(err)
     }
 
-    return Sentry.Handlers.errorHandler()(err, req, res, next)
+    Sentry.withScope((scope) => {
+      // scope.setTag('deeptrace_id', req.deeptrace.id)
+      // scope.setTag('deeptrace_parent_id', req.deeptrace.parentid)
+      // scope.setTag('deeptrace_root_id', req.deeptrace.rootid)
+
+      Sentry.Handlers.errorHandler()(err, req, res, () => { })
+    })
+
+    if (res.sentry) {
+      res.set({ 'sentry-trace': res.sentry })
+    }
+
+    next(err)
   }
 }

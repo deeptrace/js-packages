@@ -1,6 +1,6 @@
 {
   "name": "@deeptrace/config",
-  "description": "Configuration helper.",
+  "description": "Opinionated configuration helper",
   "version": "1.0.8",
   "main": "index.js",
   "publishConfig": {
