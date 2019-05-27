@@ -10,9 +10,9 @@ In order to avoid creaing too many majors and minors version during the initial 
 
 ## Packages
 
+* [@deeptrace/agent](https://github.com/deeptrace/js-packages/tree/master/packages/agent)
 * [@deeptrace/appify](https://github.com/deeptrace/js-packages/tree/master/packages/appify)
 * [@deeptrace/commons](https://github.com/deeptrace/js-packages/tree/master/packages/commons)
 * [@deeptrace/config](https://github.com/deeptrace/js-packages/tree/master/packages/config)
-* @deeptrace/core (comming soon)
 * @deeptrace/express (comming soon)
 * @deeptrace/koa (comming soon)

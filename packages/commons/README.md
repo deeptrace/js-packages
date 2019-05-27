@@ -1,5 +1,5 @@
 [![Prettier code style](https://img.shields.io/badge/code_style-prettier+custom-brightgreen.svg)](https://standardjs.com)
-![Package latest version](https://img.shields.io/npm/v/@deeptrace/appify/latest.svg?label=%40deeptrace%2Fcommons)
+![Package latest version](https://img.shields.io/npm/v/@deeptrace/commons/latest.svg?label=%40deeptrace%2Fcommons)
 ![Required node version](https://img.shields.io/node/v/@deeptrace/commons.svg?style=flat)
 ![Supported types](https://img.shields.io/npm/types/@deeptrace/commons.svg)
 
