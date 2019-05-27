@@ -1,6 +1,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 ![Package latest version](https://img.shields.io/npm/v/@deeptrace/appify/latest.svg?label=%40deeptrace%2Fappify)
 ![Required node version](https://img.shields.io/node/v/@deeptrace/appify.svg?style=flat)
+![Supported types](https://img.shields.io/npm/types/@deeptrace/appify.svg)
 
 # @deeptra/appify
 
