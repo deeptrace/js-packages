@@ -1,6 +1,6 @@
 import CommonError from './CommonError'
 
-class DomainError extends CommonError {
+abstract class DomainError extends CommonError {
   //
 }
 

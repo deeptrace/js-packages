@@ -1,6 +1,6 @@
 import CommonError from './CommonError'
 
-class InfrastructureError extends CommonError {
+abstract class InfrastructureError extends CommonError {
   //
 }
 

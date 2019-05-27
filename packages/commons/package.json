@@ -31,8 +31,8 @@
     "node": ">= 8.6.0"
   },
   "scripts": {
-    "lint": "prettier -c index.ts --no-semi --single-quote --trailing-comma none lib/{**/,}*.ts",
-    "lint:fix": "prettier --write -c index.ts --no-semi --single-quote --trailing-comma none lib/{**/,}*.ts"
+    "lint": "prettier -c index.ts lib/{**/,}*.ts",
+    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts"
   },
   "devDependencies": {
     "prettier": "^1.17.1",

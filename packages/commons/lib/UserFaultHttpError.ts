@@ -1,6 +1,6 @@
 import HttpError from './HttpError'
 
-class UserFaultHttpError extends HttpError {
+abstract class UserFaultHttpError extends HttpError {
   //
 }
 

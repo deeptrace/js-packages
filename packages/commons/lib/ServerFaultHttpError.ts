@@ -1,6 +1,6 @@
 import HttpError from './HttpError'
 
-class ServerFaultHttpError extends HttpError {
+abstract class ServerFaultHttpError extends HttpError {
   //
 }
 

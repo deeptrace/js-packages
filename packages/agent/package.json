@@ -1,0 +1,52 @@
+{
+  "name": "@deeptrace/agent",
+  "description": "Agnostic traces reporter agent for Node.js",
+  "version": "1.0.9",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*.*",
+    "dist/**/*.*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "deeptrace",
+    "tracing",
+    "traces",
+    "debug",
+    "microservices"
+  ],
+  "license": "MIT",
+  "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [],
+  "homepage": "https://github.com/deeptrace/js-packages/tree/master/packages/agent/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeptrace/js-packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deeptrace/js-packages/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fagent"
+  },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
+  "scripts": {
+    "lint": "prettier -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
+    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
+    "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.4",
+    "@types/node": "^12.0.2",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "nock": "^10.0.6",
+    "prettier": "^1.17.1",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "@deeptrace/commons": "^1.0.9",
+    "debug": "^4.1.1"
+  }
+}
