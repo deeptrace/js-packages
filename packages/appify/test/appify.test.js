@@ -12,11 +12,15 @@ describe('appify', () => {
   let api
 
   before(async () => {
-    const factory = appify(async ({ router, config, environment, logger }) => {
+    const factory = appify(async ({ router, config, environment, logger, bar }) => {
       factoryarg = { router, config, environment, logger }
 
       router.get('/foo', (_req, res) => {
         res.end('bar')
+      })
+
+      router.get('/bar', (_req, res) => {
+        res.end(bar)
       })
 
       router.get('/err', (_req, _res, next) => {
@@ -39,7 +43,8 @@ describe('appify', () => {
       logger: {
         log: () => {},
         error: () => {}
-      }
+      },
+      bar: 'baz'
     }))
   })
 
@@ -82,6 +87,15 @@ describe('appify', () => {
 
     expect(response.status).to.be.equal(200)
     expect(response.data).to.be.equals('bar')
+  })
+
+  it('exposes custom properties to be exposed to the factory as property argument', async () => {
+    const response = await api
+      .get('/bar')
+      .catch((err) => err.response)
+
+    expect(response.status).to.be.equal(200)
+    expect(response.data).to.be.equals('baz')
   })
 
   it('non-http errors gets exposed as internal server error', async () => {

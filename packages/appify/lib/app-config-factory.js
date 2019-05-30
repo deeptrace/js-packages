@@ -7,28 +7,27 @@ const { format } = require('util')
 /**
  * @param {Object} options Custom config options factory.
  * @param {string} environment Environment name.
- * @param {Object} logger Logger instance.
  * @returns {Object} Config object.
  */
-module.exports = halt((options, environment, logger) => {
+module.exports = halt((options, environment) => {
   return Object.freeze(defaultsdeep(options, config(({ env, is, as }) => {
     const name = env([ 'APPIFY_APP_NAME', 'npm_package_name' ], [ is.defaultTo('app') ])
 
     return {
       app: {
         name,
-        version: env('GIT_RELEASE')
+        version: env('GIT_RELEASE'),
+        commit: env('GIT_COMMIT')
       },
       deeptrace: {
         dsn: env([ 'APPIFY_DEEPTRACE_DSN', 'DEEPTRACE_DSN' ], [ is.url() ]),
-        timeout: env([ 'APPIFY_DEEPTRACE_TIMEOUT', 'DEEPTRACE_TIMEOUT' ], [ is.defaultTo('3000'), as.integer() ]),
-        shouldSendCallback: () => true,
         tags: {
           environment,
           service: name,
           commit: env('GIT_COMMIT'),
           release: env('GIT_RELEASE')
-        }
+        },
+        beforeSend: (trace) => trace,
       },
       helmet: {
         noCache: true

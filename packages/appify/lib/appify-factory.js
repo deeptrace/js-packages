@@ -27,20 +27,20 @@ const unhandledRejectionTrap = require('./unhandled-rejection-trap.js')
 module.exports = function factory (fn) {
   /**
    * @param {Object} options
-   * @param {Object<string, string|number|Object>} options.config Custom configs object.
+   * @param {Object<string, string|number|Object>} [options.config] Custom configs object.
    * @param {string} options.environment Current environment name.
    * @param {Object<string, Function>} options.logger Logger instance.
    * @returns {Express} Instance of express app.
    */
-  return async function appify ({ config: customConfig, environment, logger = console }) {
+  return async function appify ({ config: customConfig = { }, environment, logger = console, ...props }) {
     const app = express()
-    const config = appConfigFactory(customConfig, environment, logger)
     const router = express.Router()
+    const config = appConfigFactory(customConfig, environment)
 
     unhandledRejectionTrap(environment, logger)
 
     // if (!config.deeptrace.dsn) {
-    //   debug('missing deeptrace urn, traces won\'t be reported')
+    //   debug('missing deeptrace dsn, traces won\'t be reported')
     // }
 
     config.sentry.dsn
@@ -54,7 +54,7 @@ module.exports = function factory (fn) {
     app.use(middlewares.parsers.json())
     app.use(middlewares.helmet(config.helmet))
 
-    await Promise.resolve(fn({ router, config, environment, logger }))
+    await Promise.resolve(fn({ router, config, environment, logger, ...props }))
 
     app.use(router)
 

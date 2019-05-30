@@ -1,20 +1,22 @@
 'use strict'
 
 /**
- * @module DeepTrace.JSTools.Appify
+ * @module Appify
  */
 
 const config = require('@deeptrace/config')
 const commons = require('@deeptrace/commons')
 const factory = require('./lib/appify-factory.js')
+const withConfig = require('./lib/with-config-factory.js')
 
 module.exports.config = config
 module.exports.appify = factory
+module.exports.withConfig = withConfig
 
 module.exports.BadRequestHttpError = commons.BadRequestHttpError
 module.exports.ConflictHttpError = commons.ConflictHttpError
 module.exports.DomainError = commons.DomainError
-module.exports.Error = commons.Error
+module.exports.CommonError = commons.CommonError
 module.exports.ForbiddenHttpError = commons.ForbiddenHttpError
 module.exports.GoneHttpError = commons.GoneHttpError
 module.exports.HttpError = commons.HttpError

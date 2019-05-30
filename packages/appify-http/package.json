@@ -1,0 +1,49 @@
+{
+  "name": "@deeptrace/appify-http",
+  "description": "Native HTTP server for appify apps",
+  "version": "1.0.10",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*.*"
+  ],
+  "bin": {
+    "appify-http": "dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "appify",
+    "support",
+    "server",
+    "http",
+    "native"
+  ],
+  "license": "MIT",
+  "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [],
+  "homepage": "https://github.com/deeptrace/js-packages/tree/master/packages/appify-http/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeptrace/js-packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deeptrace/js-packages/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fappify-http"
+  },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "lint": "prettier -c index.ts lib/{**/,}*.ts",
+    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts"
+  },
+  "dependencies": {
+    "@deeptrace/appify-server-builder": "^1.0.10"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.3",
+    "prettier": "^1.17.1",
+    "typescript": "^3.4.5"
+  }
+}

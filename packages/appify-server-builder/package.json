@@ -1,0 +1,51 @@
+{
+  "name": "@deeptrace/appify-server-builder",
+  "description": "Build custom servers to run appify apps",
+  "version": "1.0.10",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*.*",
+    "dist/**/*.*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "appify",
+    "support",
+    "server"
+  ],
+  "license": "MIT",
+  "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [],
+  "homepage": "https://github.com/deeptrace/js-packages/tree/master/packages/appify-server-builder/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeptrace/js-packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deeptrace/js-packages/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Apackage%2Fappify-server-builder"
+  },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "prettier -c index.ts lib/{**/,}*.ts",
+    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "require-relative": "^0.8.7",
+    "sugar-env": "^1.5.7",
+    "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.4",
+    "@types/node": "^12.0.3",
+    "@types/require-relative": "^0.8.0",
+    "@types/yargs": "^13.0.0",
+    "prettier": "^1.17.1",
+    "typescript": "^3.4.5"
+  }
+}
