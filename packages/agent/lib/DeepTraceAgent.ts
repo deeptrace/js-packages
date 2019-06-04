@@ -45,7 +45,7 @@ class DeepTraceAgent {
   public async report(trace: ITrace) {
     if (!this.reporter) {
       this.debug(
-        'skiping trace report "%s" because reporter was not properly configured',
+        'skiping trace report "%s" because no reporter was set',
         trace.id
       )
       return
@@ -54,7 +54,7 @@ class DeepTraceAgent {
     const traceToBeReported = this.config.beforeSend(trace)
 
     if (!traceToBeReported) {
-      this.debug('skiping trace report "%s" via beforeSend')
+      this.debug('skiping trace report "%s" because beforeSend returned empty')
       return
     }
 

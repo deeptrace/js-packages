@@ -1,6 +1,7 @@
 'use strict'
 
 const { DeepTraceAgent, NativeHttpReporter } = require('@deeptrace/agent')
+const { URL } = require('url')
 
 /**
  * @param {Object} config DeepTrace's configuration object.
@@ -9,7 +10,7 @@ const { DeepTraceAgent, NativeHttpReporter } = require('@deeptrace/agent')
  */
 module.exports = (config, debug) => {
   const reporter = config.dsn
-    ? new NativeHttpReporter(config)
+    ? new NativeHttpReporter({ ...config, dsn: new URL(config.dsn) })
     : null
 
   if (!reporter) {
