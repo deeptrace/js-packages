@@ -20,13 +20,27 @@ import {
 } from './types'
 import enableGlobalAutoContext from './enableGlobalAutoContext';
 
+const INSPECTION_TAGS = {
+  arch: process.arch,
+  platform: process.platform as string,
+  engine: `node/${process.version}`
+}
+
 const configFactory = (
   config: IDeepTraceAgentConfigArg
 ): IDeepTraceAgentConfig => {
   return defaultsdeep(config, {
-    tags: {},
-    beforeSend: (trace: ITrace) => trace,
-    disableGlobalAutoContext: false
+    tags: {
+      environment: null,
+      service: null,
+      release: null,
+      commit: null,
+      arch: null,
+      platform: null,
+      engine: null
+    },
+    disableGlobalAutoContext: false,
+    beforeSend: (trace: ITrace) => trace
   })
 }
 
@@ -97,7 +111,10 @@ class DeepTraceAgent {
 
     const trace = {
       ...context,
-      tags: this.config.tags,
+      tags: {
+        ...this.config.tags,
+        ...INSPECTION_TAGS
+      },
       request: {},
       response: {}
     }
@@ -139,7 +156,7 @@ class DeepTraceAgent {
           )
       })
       .then(() => {
-        const traceToBeReported = this.config.beforeSend(trace as ITrace)
+        const traceToBeReported = this.config.beforeSend(trace as unknown as ITrace)
 
         if (!traceToBeReported) {
           return
@@ -172,9 +189,6 @@ class DeepTraceAgent {
 
     domain.add(req)
     domain.add(res)
-    domain.on('error', err => {
-      throw err
-    })
 
     domain.run(() => {
       fn({
