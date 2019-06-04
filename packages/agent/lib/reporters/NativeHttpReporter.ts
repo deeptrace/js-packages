@@ -1,4 +1,4 @@
-import { Headers, IReporter, ITimestampedTrace } from '../types'
+import { Headers, IReporter, ITimestampedTrace, IDeepTraceNativeHttpConfigArg } from '../types'
 import { Agent as HttpAgent, request as httprequest } from 'http'
 import { Agent as HttpsAgent, request as httpsrequest } from 'https'
 
@@ -18,14 +18,9 @@ class NativeHttpReporter implements IReporter {
   constructor({
     dsn,
     concurrency = 2,
-    headers = {},
+    headers = { },
     timeout = 3000
-  }: {
-    dsn: URL
-    concurrency?: number
-    headers?: Headers
-    timeout?: number
-  }) {
+  }: IDeepTraceNativeHttpConfigArg) {
     this.dsn = dsn
     this.headers = headers
     this.timeout = timeout
@@ -36,7 +31,7 @@ class NativeHttpReporter implements IReporter {
     await this.send(trace)
   }
 
-  protected createAgent (protocol: string, concurrency: number) {
+  protected createAgent(protocol: string, concurrency: number) {
     const options = {
       keepAlive: true,
       maxSockets: concurrency
@@ -56,12 +51,12 @@ class NativeHttpReporter implements IReporter {
       return {}
     }
 
-    const encoded = Buffer
-      .from(`${this.dsn.username}:${this.dsn.password}`)
-      .toString('base64')
+    const encoded = Buffer.from(
+      `${this.dsn.username}:${this.dsn.password}`
+    ).toString('base64')
 
     return {
-      'authorization': `Basic ${encoded}`
+      authorization: `Basic ${encoded}`
     }
   }
 
@@ -91,9 +86,7 @@ class NativeHttpReporter implements IReporter {
   protected async send(trace: ITimestampedTrace) {
     const body = this.getJsonBody(trace)
     const options = await this.getRequestOptions(body)
-    const request = this.dsn.protocol === 'https:'
-      ? httpsrequest
-      : httprequest
+    const request = this.dsn.protocol === 'https:' ? httpsrequest : httprequest
 
     return new Promise((resolve, reject) => {
       const req = request(options, res => {

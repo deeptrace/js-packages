@@ -1,5 +1,5 @@
 export { default as DeepTraceAgent } from './lib/DeepTraceAgent'
-export { ITrace, IReporter } from './lib/types'
+export { IDeepTraceContext, IReporter, ITrace } from './lib/types'
 export {
   default as NativeHttpReporter
 } from './lib/reporters/NativeHttpReporter'

@@ -35,8 +35,14 @@ export default (
     .help('h')
     .alias('h', 'help').argv
 
+  const namespaces = process.env.DEBUG ? process.env.DEBUG.split(',') : []
+
   if (args.debug) {
-    debug.enable('appify:*')
+    namespaces.push('appify:*')
+  }
+
+  if (namespaces.length > 0) {
+    debug.enable(namespaces.join(','))
   }
 
   const appFactory: (arg: {

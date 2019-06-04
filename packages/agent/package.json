@@ -36,9 +36,14 @@
     "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
     "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive"
   },
+  "peerDependencies": {
+    "body-parser": ">=1.18.0"
+  },
   "devDependencies": {
     "@types/debug": "^4.1.4",
+    "@types/lodash.defaultsdeep": "^4.6.6",
     "@types/node": "^12.0.2",
+    "@types/uuid": "^3.4.4",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "nock": "^10.0.6",
@@ -47,6 +52,8 @@
   },
   "dependencies": {
     "@deeptrace/commons": "^1.0.11",
-    "debug": "^4.1.1"
+    "debug": "^4.1.1",
+    "lodash.defaultsdeep": "^4.6.0",
+    "uuid": "^3.3.2"
   }
 }

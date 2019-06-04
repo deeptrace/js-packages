@@ -33,7 +33,7 @@ module.exports = halt((options, environment) => {
         noCache: true
       },
       morgan: {
-        format: env('APPIFY_MORGAN_FORMAT', [ is.defaultTo(':method :url :status :: :response-time ms :: :res[deeptrace-id]') ])
+        format: env('APPIFY_MORGAN_FORMAT', [ is.defaultTo(':method :url :status :: :response-time ms :: :res[deeptrace-request-id]') ])
       },
       sentry: {
         environment,

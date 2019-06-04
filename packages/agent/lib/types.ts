@@ -35,3 +35,34 @@ export interface ITimestampedTrace extends ITrace {
 export interface IReporter {
   report(trace: ITimestampedTrace): Promise<void>
 }
+
+export interface IDeepTraceAgentConfigTags {
+  environment?: Nullable<string>
+  service?: Nullable<string>
+  release?: Nullable<string>
+  commit?: Nullable<string>
+  [key: string]: Nullable<string> | undefined
+}
+
+export interface IDeepTraceAgentConfig {
+  tags: IDeepTraceAgentConfigTags
+  beforeSend: (trace: ITrace) => ITrace | null | undefined
+}
+
+export interface IDeepTraceAgentConfigArg {
+  tags?: IDeepTraceAgentConfigTags
+  beforeSend?: (trace: ITrace) => ITrace | null | undefined
+}
+
+export interface IDeepTraceContext {
+  requestId: string
+  parentRequestId: Nullable<string>
+  rootRequestId: string
+}
+
+export interface IDeepTraceNativeHttpConfigArg {
+  dsn: URL
+  concurrency?: number
+  headers?: Headers
+  timeout?: number
+}
