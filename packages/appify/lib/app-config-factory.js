@@ -21,6 +21,7 @@ module.exports = halt((options, environment) => {
       },
       deeptrace: {
         dsn: env([ 'APPIFY_DEEPTRACE_DSN', 'DEEPTRACE_DSN' ], [ is.url() ]),
+        disableGlobalAutoContext: env([ 'APPIFY_DEEPTRACE_DISABLE_GLOBAL_AUTO_CONTEXT', 'DEEPTRACE_DISABLE_GLOBAL_AUTO_CONTEXT' ], [ is.defaultTo('false'), as.boolean() ]),
         tags: {
           environment,
           service: name,
