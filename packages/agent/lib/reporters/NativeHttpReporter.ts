@@ -1,4 +1,9 @@
-import { Headers, IReporter, ITimestampedTrace, IDeepTraceNativeHttpConfigArg } from '../types'
+import {
+  Headers,
+  IReporter,
+  ITimestampedTrace,
+  IDeepTraceNativeHttpConfigArg
+} from '../types'
 import { Agent as HttpAgent, request as httprequest } from 'http'
 import { Agent as HttpsAgent, request as httpsrequest } from 'https'
 
@@ -18,7 +23,7 @@ class NativeHttpReporter implements IReporter {
   constructor({
     dsn,
     concurrency = 2,
-    headers = { },
+    headers = {},
     timeout = 3000
   }: IDeepTraceNativeHttpConfigArg) {
     this.dsn = dsn

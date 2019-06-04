@@ -33,10 +33,13 @@ class DeepTraceAgent {
   protected debug: Debugger
   protected config: IDeepTraceAgentConfig
 
-  constructor(reporter?: Nullable<IReporter>, config?: IDeepTraceAgentConfigArg) {
+  constructor(
+    reporter?: Nullable<IReporter>,
+    config?: IDeepTraceAgentConfigArg
+  ) {
     this.reporter = reporter || null
     this.debug = debug('deeptrace:agent')
-    this.config = configFactory(config || { })
+    this.config = configFactory(config || {})
   }
 
   public async report(trace: ITrace) {

@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import { IncomingMessage, ServerResponse } from 'http'
+import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http'
 import { Nullable } from './types'
 
 const iWantABuffer = (
@@ -49,12 +49,24 @@ export const HEADERS = {
   rootRequestId: 'DeepTrace-Root-Request-Id'
 }
 
+const getHeaderCaseInsesitive = (headers: IncomingHttpHeaders, header: string): Nullable<string> => {
+  const key = Object
+    .keys(headers)
+    .map((key) => key.toLowerCase())
+    .filter((key) => key.length === header.length)
+    .find((key) => key === header.toLowerCase())
+
+  if (!key) {
+    return null
+  }
+
+  return headers[key] as string
+}
+
 export function extractContextFromRequest(req: IncomingMessage) {
   const id = uuid()
-  const parentid =
-    (req.headers[HEADERS.parentRequestId] as string | undefined) || null
-  const rootid =
-    (req.headers[HEADERS.rootRequestId] as string | undefined) || id
+  const parentid = getHeaderCaseInsesitive(req.headers, HEADERS.parentRequestId)
+  const rootid = getHeaderCaseInsesitive(req.headers, HEADERS.rootRequestId) || id
 
   return { id, parentid, rootid }
 }
