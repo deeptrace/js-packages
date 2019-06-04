@@ -47,11 +47,13 @@ export interface IDeepTraceAgentConfigTags {
 export interface IDeepTraceAgentConfig {
   tags: IDeepTraceAgentConfigTags
   beforeSend: (trace: ITrace) => ITrace | null | undefined
+  disableGlobalAutoContext: boolean
 }
 
 export interface IDeepTraceAgentConfigArg {
   tags?: IDeepTraceAgentConfigTags
   beforeSend?: (trace: ITrace) => ITrace | null | undefined
+  disableGlobalAutoContext?: boolean
 }
 
 export interface IDeepTraceContext {

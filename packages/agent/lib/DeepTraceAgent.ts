@@ -18,13 +18,15 @@ import {
   IDeepTraceAgentConfigArg,
   IDeepTraceContext
 } from './types'
+import enableGlobalAutoContext from './enableGlobalAutoContext';
 
 const configFactory = (
   config: IDeepTraceAgentConfigArg
 ): IDeepTraceAgentConfig => {
   return defaultsdeep(config, {
     tags: {},
-    beforeSend: (trace: ITrace) => trace
+    beforeSend: (trace: ITrace) => trace,
+    disableGlobalAutoContext: false
   })
 }
 
@@ -40,6 +42,10 @@ class DeepTraceAgent {
     this.reporter = reporter || null
     this.debug = debug('deeptrace:agent')
     this.config = configFactory(config || {})
+
+    if (this.config.disableGlobalAutoContext)
+
+    enableGlobalAutoContext()
   }
 
   public async report(trace: ITrace) {
