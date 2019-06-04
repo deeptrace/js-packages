@@ -137,4 +137,12 @@ describe('appify', () => {
     expect(response.headers).to.have.a.property('expires')
     expect(response.headers['expires']).to.be.equals('0')
   })
+
+  it('deeptrace exposes its request id on every response', async () => {
+    const response = await api
+      .get('/ping')
+      .catch((err) => err.response)
+
+    expect(response.headers).to.have.a.property('deeptrace-request-id')
+  })
 })

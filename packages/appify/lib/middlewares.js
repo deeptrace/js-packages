@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  // deeptrace: require('./middlewares/deeptrace.js'),
+  deeptrace: require('./middlewares/deeptrace.js'),
   helmet: require('./middlewares/helmet.js'),
   morgan: require('./middlewares/morgan.js'),
   normalizer: require('./middlewares/normalizer.js'),

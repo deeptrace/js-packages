@@ -1,6 +1,8 @@
 import uuid from 'uuid/v4'
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http'
 import { Nullable } from './types'
+import url from 'url'
+import forwareded from 'forwarded'
 
 const iWantABuffer = (
   chunk: Buffer | string | null,
@@ -49,12 +51,14 @@ export const HEADERS = {
   rootRequestId: 'DeepTrace-Root-Request-Id'
 }
 
-const getHeaderCaseInsesitive = (headers: IncomingHttpHeaders, header: string): Nullable<string> => {
-  const key = Object
-    .keys(headers)
-    .map((key) => key.toLowerCase())
-    .filter((key) => key.length === header.length)
-    .find((key) => key === header.toLowerCase())
+const getHeaderCaseInsesitive = (
+  headers: IncomingHttpHeaders,
+  header: string
+): Nullable<string> => {
+  const key = Object.keys(headers)
+    .map(key => key.toLowerCase())
+    .filter(key => key.length === header.length)
+    .find(key => key === header.toLowerCase())
 
   if (!key) {
     return null
@@ -66,9 +70,48 @@ const getHeaderCaseInsesitive = (headers: IncomingHttpHeaders, header: string): 
 export function extractContextFromRequest(req: IncomingMessage) {
   const id = uuid()
   const parentid = getHeaderCaseInsesitive(req.headers, HEADERS.parentRequestId)
-  const rootid = getHeaderCaseInsesitive(req.headers, HEADERS.rootRequestId) || id
+  const rootid =
+    getHeaderCaseInsesitive(req.headers, HEADERS.rootRequestId) || id
 
   return { id, parentid, rootid }
+}
+
+type CustomRequest = IncomingMessage & { connection: { encrypted?: boolean } }
+
+const getProtocol = async (req: CustomRequest) => {
+  const proto = req.connection.encrypted ? 'https' : 'http'
+
+  const header =
+    getHeaderCaseInsesitive(req.headers, 'X-Forwarded-Proto') || proto
+  const index = header.indexOf(',')
+
+  return index !== -1 ? header.substring(0, index).trim() : header.trim()
+}
+
+const getHostAndPort = async (
+  req: CustomRequest
+): Promise<{ host: string | undefined; port: string | undefined }> => {
+  let host = getHeaderCaseInsesitive(req.headers, 'X-Forwarded-Host')
+
+  if (!host) {
+    host = getHeaderCaseInsesitive(req.headers, 'Host')
+  } else if (host.indexOf(',') !== -1) {
+    host = host.substring(0, host.indexOf(',')).trimRight()
+  }
+
+  if (!host) return { host: undefined, port: undefined }
+
+  // IPv6 literal support
+  const offset = host[0] === '[' ? host.indexOf(']') + 1 : 0
+  const index = host.indexOf(':', offset)
+
+  return index !== -1
+    ? { host: host.substring(0, index), port: host.substring(index + 1) }
+    : { host, port: undefined }
+}
+
+const getClientIP = async (req: CustomRequest) => {
+  return forwareded(req)[0] || null
 }
 
 export async function extractRequestInfo(
@@ -81,12 +124,24 @@ export async function extractRequestInfo(
     )
   }
 
+  const [ip, protocol, { host, port }, body] = await Promise.all([
+    getClientIP(req as CustomRequest),
+    getProtocol(req as CustomRequest),
+    getHostAndPort(req as CustomRequest),
+    (async () => (req.hasOwnProperty('body') ? stringify(req.body) : null))()
+  ])
+
   return {
-    ip: req.hasOwnProperty('ip') ? req.ip : req.connection.remoteAddress, // @todo get forwareded ips
+    ip,
     method: req.method,
-    uri: req.url,
+    uri: url.format({
+      protocol,
+      hostname: host,
+      port,
+      pathname: req.url
+    }),
     headers: req.headers,
-    body: req.hasOwnProperty('body') ? stringify(req.body) : null
+    body
   }
 }
 

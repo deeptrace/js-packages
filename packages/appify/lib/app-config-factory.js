@@ -27,7 +27,7 @@ module.exports = halt((options, environment) => {
           commit: env('GIT_COMMIT'),
           release: env('GIT_RELEASE')
         },
-        beforeSend: (trace) => trace,
+        beforeSend: (trace) => trace
       },
       helmet: {
         noCache: true

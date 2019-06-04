@@ -22,7 +22,7 @@ class NativeHttpReporter implements IReporter {
 
   constructor({
     dsn,
-    concurrency = 2,
+    concurrency = 10,
     headers = {},
     timeout = 3000
   }: IDeepTraceNativeHttpConfigArg) {

@@ -26,6 +26,7 @@
   },
   "scripts": {
     "lint": "standard",
+    "lint:fix": "standard --fix",
     "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive --throw-deprecation"
   },
   "engines": {

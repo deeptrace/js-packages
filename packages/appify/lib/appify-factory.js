@@ -39,15 +39,11 @@ module.exports = function factory (fn) {
 
     unhandledRejectionTrap(environment, logger)
 
-    // if (!config.deeptrace.dsn) {
-    //   debug('missing deeptrace dsn, traces won\'t be reported')
-    // }
-
     config.sentry.dsn
       ? Sentry.init({ ...config.sentry })
       : debug('missing sentry dsn, its initialization has been skipped')
 
-    // app.use(middlewares.deeptrace(config.deeptrace))
+    app.use(middlewares.deeptrace(config.deeptrace, debug))
     app.use(middlewares.sentry.requests())
     app.use(middlewares.morgan(config.morgan))
     app.use(middlewares.parsers.urlencoded())

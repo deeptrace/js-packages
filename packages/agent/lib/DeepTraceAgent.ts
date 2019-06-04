@@ -51,9 +51,19 @@ class DeepTraceAgent {
       return
     }
 
+    const traceToBeReported = this.config.beforeSend(trace)
+
+    if (!traceToBeReported) {
+      this.debug('skiping trace report "%s" via beforeSend')
+      return
+    }
+
     try {
-      await this.reporter.report({ ...trace, timestamp: new Date() })
-      this.debug('successfully reported trace "%s"', trace.id)
+      await this.reporter.report({
+        ...traceToBeReported,
+        timestamp: new Date()
+      })
+      this.debug('successfully reported trace "%s"', traceToBeReported.id)
     } catch (err) {
       if (!(err instanceof ReporterError)) {
         throw err
@@ -61,7 +71,7 @@ class DeepTraceAgent {
 
       this.debug(
         'failed to report trace "%s": [%s] %s',
-        trace.id,
+        traceToBeReported.id,
         err.name,
         err.message
       )

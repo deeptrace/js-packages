@@ -12,7 +12,7 @@ module.exports = (configFactory, appFactory) => {
   return async (props) => {
     return appFactory({
       ...props,
-      config: await Promise.resolve(configFactory({ ...props })),
+      config: await Promise.resolve(configFactory({ ...props }))
     })
   }
 }
