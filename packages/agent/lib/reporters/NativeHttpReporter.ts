@@ -93,15 +93,19 @@ class NativeHttpReporter implements IReporter {
     const options = await this.getRequestOptions(body)
     const request = this.dsn.protocol === 'https:' ? httpsrequest : httprequest
 
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const req = request(options, res => {
         if (res.statusCode === 422) {
-          throw new InvalidPayloadError('request failed due to invalid payload')
+          return reject(
+            new InvalidPayloadError('request failed due to invalid payload')
+          )
         }
 
         if (res.statusCode !== 204) {
-          throw new FailedRequestError(
-            `request failed with response status code "${res.statusCode}"`
+          return reject(
+            new FailedRequestError(
+              `request failed with response status code "${res.statusCode}"`
+            )
           )
         }
 

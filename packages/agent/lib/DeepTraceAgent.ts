@@ -1,5 +1,4 @@
 import { debug, Debugger } from 'debug'
-import { ReporterError } from './errors'
 import { create as createDomain } from 'domain'
 import defaultsdeep from 'lodash.defaultsdeep'
 import { IncomingMessage, ServerResponse } from 'http'
@@ -18,7 +17,7 @@ import {
   IDeepTraceAgentConfigArg,
   IDeepTraceContext
 } from './types'
-import enableGlobalAutoContext from './enableGlobalAutoContext';
+import enableGlobalAutoContext from './enableGlobalAutoContext'
 
 const configFactory = (
   config: IDeepTraceAgentConfigArg
@@ -72,31 +71,34 @@ class DeepTraceAgent {
       return
     }
 
-    try {
-      await this.reporter.report({
+    await this.reporter
+      .report({
         ...traceToBeReported,
         timestamp: new Date()
       })
-      this.debug('successfully reported trace "%s"', traceToBeReported.id)
-    } catch (err) {
-      if (!(err instanceof ReporterError)) {
-        throw err
-      }
-
-      this.debug(
-        'failed to report trace "%s": [%s] %s',
-        traceToBeReported.id,
-        err.name,
-        err.message
-      )
-    }
+      .then(() => {
+        this.debug('successfully reported trace "%s"', traceToBeReported.id)
+      })
+      .catch(err => {
+        this.debug(
+          'failed to report trace "%s": [%s] %s',
+          traceToBeReported.id,
+          err.name,
+          err.message
+        )
+      })
   }
 
-  public bind(
+  public async bind(
     req: IncomingMessage,
     res: ServerResponse,
     fn: (context: IDeepTraceContext) => void
-  ): void {
+  ): Promise<void>
+  public async bind<T>(
+    req: IncomingMessage,
+    res: ServerResponse,
+    fn: (context: IDeepTraceContext) => T
+  ): Promise<T> {
     const requestedAt = new Date()
     const context = extractContextFromRequest(req)
 
@@ -147,7 +149,9 @@ class DeepTraceAgent {
           )
       })
       .then(() => {
-        const traceToBeReported = this.config.beforeSend(trace as unknown as ITrace)
+        const traceToBeReported = this.config.beforeSend(
+          (trace as unknown) as ITrace
+        )
 
         if (!traceToBeReported) {
           return
@@ -181,11 +185,15 @@ class DeepTraceAgent {
     domain.add(req)
     domain.add(res)
 
-    domain.run(() => {
-      fn({
-        requestId: context.id,
-        parentRequestId: context.parentid,
-        rootRequestId: context.rootid
+    return new Promise((resolve, reject) => {
+      domain.on('error', reject)
+
+      domain.run(() => {
+        resolve(fn({
+          requestId: context.id,
+          parentRequestId: context.parentid,
+          rootRequestId: context.rootid
+        }))
       })
     })
   }

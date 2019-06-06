@@ -8,7 +8,7 @@ import {
 
 let __PATCHED__ = false
 
-export default function enableGlobalAutoContext (): void {
+export default function enableGlobalAutoContext(): void {
   if (__PATCHED__) return
 
   const originalHttpRequest = http.request.bind(http)
@@ -24,8 +24,9 @@ export default function enableGlobalAutoContext (): void {
       const _headers = headers || {}
 
       if (process.domain) {
-        const domain: NodeJS.Domain & { deeptrace?: { [key: string]: string } } =
-          process.domain
+        const domain: NodeJS.Domain & {
+          deeptrace?: { [key: string]: string }
+        } = process.domain
         Object.assign(_headers, domain.deeptrace || {})
       }
 
@@ -45,8 +46,9 @@ export default function enableGlobalAutoContext (): void {
       const cb = url ? args[2] : args[1]
 
       if (process.domain) {
-        const domain: NodeJS.Domain & { deeptrace?: { [key: string]: string } } =
-          process.domain
+        const domain: NodeJS.Domain & {
+          deeptrace?: { [key: string]: string }
+        } = process.domain
 
         options.headers = {
           ...(options.headers || {}),
