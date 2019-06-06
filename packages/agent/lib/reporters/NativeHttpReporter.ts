@@ -28,9 +28,7 @@ class NativeHttpReporter implements IReporter {
   }: IDeepTraceNativeHttpConfigArg) {
     this.headers = headers
     this.timeout = timeout
-    this.dsn = dsn instanceof URL
-      ? dsn
-      : new URL(dsn)
+    this.dsn = dsn instanceof URL ? dsn : new URL(dsn)
 
     this.agent = this.createAgent(this.dsn.protocol, concurrency)
   }

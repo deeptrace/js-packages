@@ -57,7 +57,11 @@ class DeepTraceAgent {
     enableGlobalAutoContext()
   }
 
-  public async report(trace: ITrace, req: IncomingMessage, res: ServerResponse) {
+  public async report(
+    trace: ITrace,
+    req: IncomingMessage,
+    res: ServerResponse
+  ) {
     if (!this.reporter) {
       this.debug(
         'skiping trace report "%s" because no reporter was set',
@@ -115,31 +119,34 @@ class DeepTraceAgent {
     res.setHeader(HEADERS.requestId, context.requestId)
     this.debug('started inspecting request from trace "%s"', context.requestId)
 
-    Promise
-      .all([
-        extractCallerInfo(req)
-          .then((data) => {
-            trace.caller = data
-          }),
-        interceptResponseInfo(res)
-          .then(data => {
-            this.debug('extracted response info for trace "%s"', trace.id)
-            trace.response = data
+    Promise.all([
+      extractCallerInfo(req).then(data => {
+        trace.caller = data
+      }),
+      interceptResponseInfo(res)
+        .then(data => {
+          this.debug('extracted response info for trace "%s"', trace.id)
+          trace.response = data
+        })
+        .catch(
+          rethrow(err => {
+            this.debug(
+              'failed to intercept response info for trace "%s": [%s] %s :: %s',
+              trace.id,
+              err.name,
+              err.message,
+              err.stack
+            )
           })
-          .catch(
-            rethrow(err => {
-              this.debug(
-                'failed to intercept response info for trace "%s": [%s] %s :: %s',
-                trace.id,
-                err.name,
-                err.message,
-                err.stack
-              )
-            })
-          )
-      ])
+        )
+    ])
       .then(async () => {
-        await extractRequestInfo(req, this.debug, context, this.config.requestBodySizeLimit)
+        await extractRequestInfo(
+          req,
+          this.debug,
+          context,
+          this.config.requestBodySizeLimit
+        )
           .then(data => {
             this.debug('extracted request info for trace "%s"', trace.id)
             trace.request = { ...data, timestamp: requestedAt }
@@ -165,19 +172,17 @@ class DeepTraceAgent {
           return
         }
 
-        return this
-          .report(traceToBeReported, req, res)
-          .catch(
-            rethrow(err => {
-              this.debug(
-                'failed to report trace "%s": [%s] %s :: %s',
-                trace.id,
-                err.name,
-                err.message,
-                err.stack
-              )
-            })
-          )
+        return this.report(traceToBeReported, req, res).catch(
+          rethrow(err => {
+            this.debug(
+              'failed to report trace "%s": [%s] %s :: %s',
+              trace.id,
+              err.name,
+              err.message,
+              err.stack
+            )
+          })
+        )
       })
       .catch(() => {
         this.debug('aborted trace report "%s"', trace.id)
@@ -199,8 +204,7 @@ class DeepTraceAgent {
       domain.on('error', reject)
 
       domain.run(() => {
-        Promise
-          .resolve(fn(context))
+        Promise.resolve(fn(context))
           .then(() => resolve())
           .catch(reject)
       })

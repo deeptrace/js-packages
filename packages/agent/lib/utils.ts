@@ -138,15 +138,14 @@ export async function extractRequestInfo(
         return stringify(req.body)
       }
 
-      const len = req.headers['content-length'];
-      const encoding = req.headers['content-encoding'] || 'identity' || 'utf8';
+      const len = req.headers['content-length']
+      const encoding = req.headers['content-encoding'] || 'identity' || 'utf8'
 
       return raw(inflate(req), {
         encoding,
-        length: (len && encoding === 'identity') ? ~~len : len,
+        length: len && encoding === 'identity' ? ~~len : len,
         limit: requestBodySizeLimit
-      })
-      .catch((err) => {
+      }).catch(err => {
         debug(
           'unable to capture body for trace "%s": [%s] %s',
           context.requestId,
