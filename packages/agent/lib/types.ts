@@ -76,7 +76,7 @@ export interface IDeepTraceContext {
 }
 
 export interface IDeepTraceNativeHttpConfigArg {
-  dsn: URL
+  dsn: URL | string
   concurrency?: number
   headers?: Headers
   timeout?: number

@@ -43,6 +43,22 @@ As you can see, the first argument for `DeepTraceAgent` is an instance of a `Rep
 This means that in the future we can ship DeepTrace with more reporters and you can create you own reporters as well.
 Since DeepTrace does not ship with any security layer, creating or extending a reporter is the suggested way of handling any authentication mechanism you might have implemented.
 
+Now that you have an agent's instance, you can bind it to the current request and response:
+
+```js
+agent.bind(req, res, (context) => {
+    /**
+     * You might want to store DeepTrace's context for some reason, like
+     * propagating the context to Sentry or something like that.
+     */
+    Object.defineProperty(req, 'deeptrace', context)
+    next()
+})
+```
+
+Anything called directly or indirectly from within `bind`'s callback is now wrapped on a **DeepTrace's Domain**. Any HTTP request done from within **DeepTrace's Domain** will have **DeepTrace's Context Headers** propagated automagically. This funtionality relies on node's native [Domain](https://nodejs.org/docs/latest-v12.x/api/domain.html) module and some monkey patching (`http.request` and `https.request` reads context headers from active domain). You might notice that `Domain` module is deprecated for a few years but hasn't been removed yet because there's no alternative API to do what it does. There're major projects such as SentryJS relying on this module so I trust that it won't be removed so soon - and if it gets removed, we'll be updating this package to use the new alternative API.
+
+DeeTrace's agent relies only on native functionality from [http.IncomingMessage](https://nodejs.org/docs/latest-v12.x/api/http.html#http_class_http_incomingmessage) and [http.ServerResponse](https://nodejs.org/docs/latest-v12.x/api/http.html#http_class_http_serverresponse), therefore it can work with virtually any server (like [spdy](https://www.npmjs.com/package/spdy)) and web (micro)framework so you don't need to be constrained by [express](https://www.npmjs.com/package/express) and [koa](https://www.npmjs.com/package/koa).
 
 ### Using with express
 
@@ -51,10 +67,6 @@ const agent = new DeepTraceAgent(/* see above how to instantiate an agent */)
 
 app.use((req, res, next) => {
     agent.bind(req, res, (context) => {
-        /**
-         * You might want to store DeepTrace's context for some reason, like
-         * propagating the context to Sentry or something like that.
-         */
         Object.defineProperty(req, 'deeptrace', context)
         next()
     })
@@ -69,10 +81,6 @@ const agent = new DeepTraceAgent(/* see above how to instantiate an agent */)
 
 app.use(async (ctx, next) => {
     await agent.bind(ctx.req, ctx.res, async (context) => {
-        /**
-         * You might want to store DeepTrace's context for some reason, like
-         * propagating the context to Sentry or something like that.
-         */
         Object.defineProperty(ctx, 'deeptrace', context)
         await next()
     })
