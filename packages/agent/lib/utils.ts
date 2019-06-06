@@ -1,8 +1,10 @@
 import uuid from 'uuid/v4'
-import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http'
-import { Nullable } from './types'
 import url from 'url'
+import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http'
+import { Nullable, IDeepTraceContext } from './types'
 import forwareded from 'forwarded'
+import raw from 'raw-body'
+import inflate from 'inflation'
 
 const iWantABuffer = (
   chunk: Buffer | string | null,
@@ -114,32 +116,60 @@ const getClientIP = async (req: CustomRequest) => {
   return forwareded(req)[0] || null
 }
 
+export async function extractCallerInfo(
+  req: IncomingMessage & { body?: any; ip?: string }
+) {
+  return {
+    ip: await getClientIP(req as CustomRequest)
+  }
+}
+
 export async function extractRequestInfo(
   req: IncomingMessage & { body?: any; ip?: string },
-  debug: debug.Debugger
+  debug: debug.Debugger,
+  context: IDeepTraceContext,
+  requestBodySizeLimit: string
 ) {
-  if (!req.hasOwnProperty('body')) {
-    debug(
-      'request body for trace "%s" was not capture because the property `req.body` does not exists, DeepTrace relies on body-parser for parsing request\'s body'
-    )
-  }
-
-  const [ip, protocol, { host, port }, body] = await Promise.all([
-    getClientIP(req as CustomRequest),
+  const [protocol, { host, port }, body] = await Promise.all([
     getProtocol(req as CustomRequest),
     getHostAndPort(req as CustomRequest),
-    (async () => (req.hasOwnProperty('body') ? stringify(req.body) : null))()
+    (async () => {
+      if (req.hasOwnProperty('body')) {
+        return stringify(req.body)
+      }
+
+      const len = req.headers['content-length'];
+      const encoding = req.headers['content-encoding'] || 'identity' || 'utf8';
+
+      return raw(inflate(req), {
+        encoding,
+        length: (len && encoding === 'identity') ? ~~len : len,
+        limit: requestBodySizeLimit
+      })
+      .catch((err) => {
+        debug(
+          'unable to capture body for trace "%s": [%s] %s',
+          context.requestId,
+          err.type,
+          err.message
+        )
+
+        return null
+      })
+    })()
   ])
 
+  const requestUrl = url.parse(req.url || '')
+
   return {
-    ip,
     method: req.method,
-    uri: url.format({
+    url: url.format({
       protocol,
       hostname: host,
       port,
-      pathname: req.url
+      pathname: requestUrl.pathname
     }),
+    search: requestUrl.search,
     headers: req.headers,
     body
   }

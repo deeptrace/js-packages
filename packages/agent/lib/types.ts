@@ -1,3 +1,5 @@
+import { IncomingMessage, ServerResponse } from "http";
+
 export type Nullable<T> = T | null
 
 export type FlatObject<T> = {
@@ -12,10 +14,13 @@ export interface ITrace {
   parentid: Nullable<string>
   rootid: string
   tags: Tags
+  caller: {
+    ip: Nullable<string>
+    [key: string]: any
+  }
   request: {
     method: string
     url: URL
-    ip: string
     headers: Headers
     body: Nullable<string>
     timestamp: Date
@@ -44,16 +49,24 @@ export interface IDeepTraceAgentConfigTags {
   [key: string]: Nullable<string> | undefined
 }
 
+export type IDeepTraceBeforeSendCallback = (
+  trace: ITrace,
+  req?: IncomingMessage,
+  res?: ServerResponse
+) => ITrace | null | undefined | false
+
 export interface IDeepTraceAgentConfig {
   tags: IDeepTraceAgentConfigTags
-  beforeSend: (trace: ITrace) => ITrace | null | undefined
+  beforeSend: IDeepTraceBeforeSendCallback
   disableGlobalAutoContext: boolean
+  requestBodySizeLimit: string
 }
 
 export interface IDeepTraceAgentConfigArg {
   tags?: IDeepTraceAgentConfigTags
-  beforeSend?: (trace: ITrace) => ITrace | null | undefined
+  beforeSend?: IDeepTraceBeforeSendCallback
   disableGlobalAutoContext?: boolean
+  requestBodySizeLimit?: string
 }
 
 export interface IDeepTraceContext {

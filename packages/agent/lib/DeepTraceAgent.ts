@@ -7,7 +7,8 @@ import {
   extractRequestInfo,
   HEADERS,
   interceptResponseInfo,
-  rethrow
+  rethrow,
+  extractCallerInfo
 } from './utils'
 import {
   Nullable,
@@ -33,7 +34,8 @@ const configFactory = (
       engine: `node/${process.version}`
     },
     disableGlobalAutoContext: false,
-    beforeSend: (trace: ITrace) => trace
+    beforeSend: (trace: ITrace) => trace,
+    requestBodySizeLimit: '1mb'
   })
 }
 
@@ -55,7 +57,7 @@ class DeepTraceAgent {
     enableGlobalAutoContext()
   }
 
-  public async report(trace: ITrace) {
+  public async report(trace: ITrace, req: IncomingMessage, res: ServerResponse) {
     if (!this.reporter) {
       this.debug(
         'skiping trace report "%s" because no reporter was set',
@@ -64,7 +66,7 @@ class DeepTraceAgent {
       return
     }
 
-    const traceToBeReported = this.config.beforeSend(trace)
+    const traceToBeReported = this.config.beforeSend(trace, req, res)
 
     if (!traceToBeReported) {
       this.debug('skiping trace report "%s" because beforeSend returned empty')
@@ -100,21 +102,31 @@ class DeepTraceAgent {
     fn: (context: IDeepTraceContext) => T
   ): Promise<T> {
     const requestedAt = new Date()
-    const context = extractContextFromRequest(req)
-
-    res.setHeader(HEADERS.requestId, context.id)
-    this.debug('started inspecting request from trace "%s"', context.id)
 
     const trace = {
-      ...context,
+      ...extractContextFromRequest(req),
       tags: this.config.tags,
+      caller: {},
       request: {},
       response: {}
     }
 
-    Promise.resolve()
-      .then(async () => {
-        await interceptResponseInfo(res)
+    const context = {
+      requestId: trace.id,
+      parentRequestId: trace.parentid,
+      rootRequestId: trace.rootid
+    }
+
+    res.setHeader(HEADERS.requestId, context.requestId)
+    this.debug('started inspecting request from trace "%s"', context.requestId)
+
+    Promise
+      .all([
+        extractCallerInfo(req)
+          .then((data) => {
+            trace.caller = data
+          }),
+        interceptResponseInfo(res)
           .then(data => {
             this.debug('extracted response info for trace "%s"', trace.id)
             trace.response = data
@@ -130,8 +142,9 @@ class DeepTraceAgent {
               )
             })
           )
-
-        await extractRequestInfo(req, this.debug)
+      ])
+      .then(async () => {
+        await extractRequestInfo(req, this.debug, context, this.config.requestBodySizeLimit)
           .then(data => {
             this.debug('extracted request info for trace "%s"', trace.id)
             trace.request = { ...data, timestamp: requestedAt }
@@ -157,7 +170,9 @@ class DeepTraceAgent {
           return
         }
 
-        return this.report(traceToBeReported).catch(
+        return this
+        .report(traceToBeReported, req, res)
+        .catch(
           rethrow(err => {
             this.debug(
               'failed to report trace "%s": [%s] %s :: %s',
@@ -177,8 +192,8 @@ class DeepTraceAgent {
 
     Object.assign(domain, {
       deeptrace: {
-        [HEADERS.parentRequestId]: context.id,
-        [HEADERS.rootRequestId]: context.rootid
+        [HEADERS.parentRequestId]: context.requestId,
+        [HEADERS.rootRequestId]: context.rootRequestId
       }
     })
 
@@ -189,11 +204,7 @@ class DeepTraceAgent {
       domain.on('error', reject)
 
       domain.run(() => {
-        resolve(fn({
-          requestId: context.id,
-          parentRequestId: context.parentid,
-          rootRequestId: context.rootid
-        }))
+        resolve(fn(context))
       })
     })
   }
