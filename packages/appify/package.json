@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/appify",
   "description": "Effortless opinionated API bootstrap as module",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "main": "index.js",
   "publishConfig": {
     "access": "public"
@@ -32,7 +32,7 @@
     "node": ">= 8.6.0"
   },
   "dependencies": {
-    "@deeptrace/agent": "^1.0.21",
+    "@deeptrace/agent": "^1.0.22",
     "@deeptrace/commons": "^1.0.21",
     "@deeptrace/config": "^1.0.21",
     "@sentry/node": "^5.4.0",
