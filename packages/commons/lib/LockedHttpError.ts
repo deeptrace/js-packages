@@ -1,4 +1,4 @@
-import UserFaultHttpError from './UserFaultHttpError'
+import UserFaultHttpError from './UserFaultHttpError';
 
 class LockedHttpError extends UserFaultHttpError {
   constructor({
@@ -6,12 +6,12 @@ class LockedHttpError extends UserFaultHttpError {
     message,
     stack
   }: {
-    code: string
-    message: string
-    stack?: string
+    code: string;
+    message: string;
+    stack?: string;
   }) {
-    super({ status: 423, code, message, stack })
+    super({ status: 423, code, message, stack });
   }
 }
 
-export default LockedHttpError
+export default LockedHttpError;

@@ -4,4 +4,4 @@ export default {
   STAGING: 'staging',
   PRODUCTION: 'production',
   DEVELOPMENT: 'development'
-}
+};

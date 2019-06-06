@@ -1,15 +1,15 @@
-'use strict'
+'use strict';
 
-import debug from 'debug'
-import env from 'sugar-env'
-import path from 'path'
-import yargs from 'yargs'
-import relative from 'require-relative'
-import { RequestListener } from 'http'
+import debug from 'debug';
+import env from 'sugar-env';
+import path from 'path';
+import yargs from 'yargs';
+import relative from 'require-relative';
+import { RequestListener } from 'http';
 
 const requireRelative = (file: string) => {
-  return relative(path.resolve(process.cwd(), file))
-}
+  return relative(path.resolve(process.cwd(), file));
+};
 
 export default (
   serverName: string,
@@ -33,39 +33,39 @@ export default (
         )
     )
     .help('h')
-    .alias('h', 'help').argv
+    .alias('h', 'help').argv;
 
-  const namespaces = process.env.DEBUG ? process.env.DEBUG.split(',') : []
+  const namespaces = process.env.DEBUG ? process.env.DEBUG.split(',') : [];
 
   if (args.debug) {
-    namespaces.push('appify:*')
+    namespaces.push('appify:*');
   }
 
   if (namespaces.length > 0) {
-    debug.enable(namespaces.join(','))
+    debug.enable(namespaces.join(','));
   }
 
   const appFactory: (arg: {
-    environment: string
-  }) => Promise<RequestListener> = requireRelative(args.app as string)
+    environment: string;
+  }) => Promise<RequestListener> = requireRelative(args.app as string);
 
   return async (
     startServerFn: (props: {
-      app: RequestListener
-      args: { [key: string]: any }
-      debug: debug.Debugger
-      requireRelative: typeof requireRelative
-      [key: string]: any
+      app: RequestListener;
+      args: { [key: string]: any };
+      debug: debug.Debugger;
+      requireRelative: typeof requireRelative;
+      [key: string]: any;
     }) => Promise<void>
   ): Promise<void> => {
-    const environment = env.current
-    const app = await appFactory({ environment })
+    const environment = env.current;
+    const app = await appFactory({ environment });
 
     return startServerFn({
       app,
       args,
       debug: debug('appify:server'),
       requireRelative
-    })
-  }
-}
+    });
+  };
+};

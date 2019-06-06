@@ -1,7 +1,7 @@
-import { debug, Debugger } from 'debug'
-import { create as createDomain } from 'domain'
-import defaultsdeep from 'lodash.defaultsdeep'
-import { IncomingMessage, ServerResponse } from 'http'
+import { debug, Debugger } from 'debug';
+import { create as createDomain } from 'domain';
+import defaultsdeep from 'lodash.defaultsdeep';
+import { IncomingMessage, ServerResponse } from 'http';
 import {
   extractContextFromRequest,
   extractRequestInfo,
@@ -9,7 +9,7 @@ import {
   interceptResponseInfo,
   rethrow,
   extractCallerInfo
-} from './utils'
+} from './utils';
 import {
   Nullable,
   IReporter,
@@ -17,8 +17,8 @@ import {
   IDeepTraceAgentConfig,
   IDeepTraceAgentConfigArg,
   IDeepTraceContext
-} from './types'
-import enableGlobalAutoContext from './enableGlobalAutoContext'
+} from './types';
+import enableGlobalAutoContext from './enableGlobalAutoContext';
 
 const configFactory = (
   config: IDeepTraceAgentConfigArg
@@ -36,25 +36,25 @@ const configFactory = (
     disableGlobalAutoContext: false,
     beforeSend: (trace: ITrace) => trace,
     requestBodySizeLimit: '1mb'
-  })
-}
+  });
+};
 
 class DeepTraceAgent {
-  protected reporter: Nullable<IReporter>
-  protected debug: Debugger
-  protected config: IDeepTraceAgentConfig
+  protected reporter: Nullable<IReporter>;
+  protected debug: Debugger;
+  protected config: IDeepTraceAgentConfig;
 
   constructor(
     reporter?: Nullable<IReporter>,
     config?: IDeepTraceAgentConfigArg
   ) {
-    this.reporter = reporter || null
-    this.debug = debug('deeptrace:agent')
-    this.config = configFactory(config || {})
+    this.reporter = reporter || null;
+    this.debug = debug('deeptrace:agent');
+    this.config = configFactory(config || {});
 
-    if (this.config.disableGlobalAutoContext) return
+    if (this.config.disableGlobalAutoContext) return;
 
-    enableGlobalAutoContext()
+    enableGlobalAutoContext();
   }
 
   public async report(
@@ -66,15 +66,15 @@ class DeepTraceAgent {
       this.debug(
         'skiping trace report "%s" because no reporter was set',
         trace.id
-      )
-      return
+      );
+      return;
     }
 
-    const traceToBeReported = this.config.beforeSend(trace, req, res)
+    const traceToBeReported = this.config.beforeSend(trace, req, res);
 
     if (!traceToBeReported) {
-      this.debug('skiping trace report "%s" because beforeSend returned empty')
-      return
+      this.debug('skiping trace report "%s" because beforeSend returned empty');
+      return;
     }
 
     await this.reporter
@@ -83,7 +83,7 @@ class DeepTraceAgent {
         timestamp: new Date()
       })
       .then(() => {
-        this.debug('successfully reported trace "%s"', traceToBeReported.id)
+        this.debug('successfully reported trace "%s"', traceToBeReported.id);
       })
       .catch(err => {
         this.debug(
@@ -91,8 +91,8 @@ class DeepTraceAgent {
           traceToBeReported.id,
           err.name,
           err.message
-        )
-      })
+        );
+      });
   }
 
   public async bind(
@@ -100,7 +100,7 @@ class DeepTraceAgent {
     res: ServerResponse,
     fn: (context: IDeepTraceContext) => void
   ): Promise<void> {
-    const requestedAt = new Date()
+    const requestedAt = new Date();
 
     const trace = {
       ...extractContextFromRequest(req),
@@ -108,25 +108,25 @@ class DeepTraceAgent {
       caller: {},
       request: {},
       response: {}
-    }
+    };
 
     const context = {
       requestId: trace.id,
       parentRequestId: trace.parentid,
       rootRequestId: trace.rootid
-    }
+    };
 
-    res.setHeader(HEADERS.requestId, context.requestId)
-    this.debug('started inspecting request from trace "%s"', context.requestId)
+    res.setHeader(HEADERS.requestId, context.requestId);
+    this.debug('started inspecting request from trace "%s"', context.requestId);
 
     Promise.all([
       extractCallerInfo(req).then(data => {
-        trace.caller = data
+        trace.caller = data;
       }),
       interceptResponseInfo(res)
         .then(data => {
-          this.debug('extracted response info for trace "%s"', trace.id)
-          trace.response = data
+          this.debug('extracted response info for trace "%s"', trace.id);
+          trace.response = data;
         })
         .catch(
           rethrow(err => {
@@ -136,7 +136,7 @@ class DeepTraceAgent {
               err.name,
               err.message,
               err.stack
-            )
+            );
           })
         )
     ])
@@ -148,8 +148,8 @@ class DeepTraceAgent {
           this.config.requestBodySizeLimit
         )
           .then(data => {
-            this.debug('extracted request info for trace "%s"', trace.id)
-            trace.request = { ...data, timestamp: requestedAt }
+            this.debug('extracted request info for trace "%s"', trace.id);
+            trace.request = { ...data, timestamp: requestedAt };
           })
           .catch(
             rethrow(err => {
@@ -159,17 +159,17 @@ class DeepTraceAgent {
                 err.name,
                 err.message,
                 err.stack
-              )
+              );
             })
-          )
+          );
       })
       .then(() => {
         const traceToBeReported = this.config.beforeSend(
           (trace as unknown) as ITrace
-        )
+        );
 
         if (!traceToBeReported) {
-          return
+          return;
         }
 
         return this.report(traceToBeReported, req, res).catch(
@@ -180,36 +180,36 @@ class DeepTraceAgent {
               err.name,
               err.message,
               err.stack
-            )
+            );
           })
-        )
+        );
       })
       .catch(() => {
-        this.debug('aborted trace report "%s"', trace.id)
-      })
+        this.debug('aborted trace report "%s"', trace.id);
+      });
 
-    const domain = createDomain()
+    const domain = createDomain();
 
     Object.assign(domain, {
       deeptrace: {
         [HEADERS.parentRequestId]: context.requestId,
         [HEADERS.rootRequestId]: context.rootRequestId
       }
-    })
+    });
 
-    domain.add(req)
-    domain.add(res)
+    domain.add(req);
+    domain.add(res);
 
     await new Promise((resolve, reject) => {
-      domain.on('error', reject)
+      domain.on('error', reject);
 
       domain.run(() => {
         Promise.resolve(fn(context))
           .then(() => resolve())
-          .catch(reject)
-      })
-    })
+          .catch(reject);
+      });
+    });
   }
 }
 
-export default DeepTraceAgent
+export default DeepTraceAgent;

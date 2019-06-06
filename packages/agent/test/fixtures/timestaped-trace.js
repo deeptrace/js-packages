@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const { URL } = require('url')
+const { URL } = require('url');
 
 module.exports = {
   id: '5500077a-1da3-4f73-9561-d5cbdf127728',
@@ -47,4 +47,4 @@ module.exports = {
     timestamp: new Date('2019-01-02T21:25:34.982Z')
   },
   timestamp: new Date('2019-01-02T21:25:35.100Z')
-}
+};

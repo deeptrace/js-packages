@@ -1,4 +1,4 @@
-import UserFaultHttpError from './UserFaultHttpError'
+import UserFaultHttpError from './UserFaultHttpError';
 
 class ForbiddenHttpError extends UserFaultHttpError {
   constructor({
@@ -6,12 +6,12 @@ class ForbiddenHttpError extends UserFaultHttpError {
     message,
     stack
   }: {
-    code: string
-    message: string
-    stack?: string
+    code: string;
+    message: string;
+    stack?: string;
   }) {
-    super({ status: 403, code, message, stack })
+    super({ status: 403, code, message, stack });
   }
 }
 
-export default ForbiddenHttpError
+export default ForbiddenHttpError;

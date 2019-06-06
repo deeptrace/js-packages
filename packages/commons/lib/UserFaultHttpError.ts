@@ -1,7 +1,7 @@
-import HttpError from './HttpError'
+import HttpError from './HttpError';
 
 abstract class UserFaultHttpError extends HttpError {
   //
 }
 
-export default UserFaultHttpError
+export default UserFaultHttpError;

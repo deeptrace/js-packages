@@ -1,4 +1,4 @@
-import UserFaultHttpError from './UserFaultHttpError'
+import UserFaultHttpError from './UserFaultHttpError';
 
 class UnauthorizedHttpError extends UserFaultHttpError {
   constructor({
@@ -6,12 +6,12 @@ class UnauthorizedHttpError extends UserFaultHttpError {
     message,
     stack
   }: {
-    code: string
-    message: string
-    stack?: string
+    code: string;
+    message: string;
+    stack?: string;
   }) {
-    super({ status: 401, code, message, stack })
+    super({ status: 401, code, message, stack });
   }
 }
 
-export default UnauthorizedHttpError
+export default UnauthorizedHttpError;

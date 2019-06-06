@@ -1,4 +1,4 @@
-import ServerFaultHttpError from './ServerFaultHttpError'
+import ServerFaultHttpError from './ServerFaultHttpError';
 
 class InternalServerErrorHttpError extends ServerFaultHttpError {
   constructor({
@@ -6,12 +6,12 @@ class InternalServerErrorHttpError extends ServerFaultHttpError {
     message,
     stack
   }: {
-    code: string
-    message: string
-    stack?: string
+    code: string;
+    message: string;
+    stack?: string;
   }) {
-    super({ status: 500, code, message, stack })
+    super({ status: 500, code, message, stack });
   }
 }
 
-export default InternalServerErrorHttpError
+export default InternalServerErrorHttpError;

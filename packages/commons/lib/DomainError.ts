@@ -1,7 +1,7 @@
-import CommonError from './CommonError'
+import CommonError from './CommonError';
 
 abstract class DomainError extends CommonError {
   //
 }
 
-export default DomainError
+export default DomainError;

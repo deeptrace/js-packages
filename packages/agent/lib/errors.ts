@@ -1,4 +1,4 @@
-import { CommonError } from '@deeptrace/commons'
+import { CommonError } from '@deeptrace/commons';
 
 export abstract class DeepTraceAgentError extends CommonError {
   //

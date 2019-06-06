@@ -1,4 +1,4 @@
-import UserFaultHttpError from './UserFaultHttpError'
+import UserFaultHttpError from './UserFaultHttpError';
 
 class NotFoundHttpError extends UserFaultHttpError {
   constructor({
@@ -6,12 +6,12 @@ class NotFoundHttpError extends UserFaultHttpError {
     message,
     stack
   }: {
-    code: string
-    message: string
-    stack?: string
+    code: string;
+    message: string;
+    stack?: string;
   }) {
-    super({ status: 404, code, message, stack })
+    super({ status: 404, code, message, stack });
   }
 }
 
-export default NotFoundHttpError
+export default NotFoundHttpError;

@@ -1,7 +1,7 @@
-import UserFaultHttpError from './UserFaultHttpError'
+import UserFaultHttpError from './UserFaultHttpError';
 
 class BadRequestHttpError extends UserFaultHttpError {
-  public readonly details: Object[]
+  public readonly details: Object[];
 
   constructor({
     code,
@@ -9,14 +9,14 @@ class BadRequestHttpError extends UserFaultHttpError {
     stack,
     details = []
   }: {
-    code: string
-    message: string
-    stack?: string
-    details: Object[]
+    code: string;
+    message: string;
+    stack?: string;
+    details: Object[];
   }) {
-    super({ status: 400, code, message, stack })
-    this.details = details
+    super({ status: 400, code, message, stack });
+    this.details = details;
   }
 }
 
-export default BadRequestHttpError
+export default BadRequestHttpError;

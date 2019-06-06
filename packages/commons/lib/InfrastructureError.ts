@@ -1,7 +1,7 @@
-import CommonError from './CommonError'
+import CommonError from './CommonError';
 
 abstract class InfrastructureError extends CommonError {
   //
 }
 
-export default InfrastructureError
+export default InfrastructureError;
