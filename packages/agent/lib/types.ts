@@ -37,8 +37,8 @@ export interface IReporter {
 }
 
 export interface IDeepTraceAgentConfigTags {
+  app?: Nullable<string>
   environment?: Nullable<string>
-  service?: Nullable<string>
   release?: Nullable<string>
   commit?: Nullable<string>
   [key: string]: Nullable<string> | undefined

@@ -58,14 +58,8 @@ export default function enableGlobalAutoContext (): void {
     }
   }
 
-  Object.assign(http, {
-    _deeptrace: true,
-    request: factory(originalHttpRequest)
-  })
-  Object.assign(https, {
-    _deeptrace: true,
-    request: factory(originalHttpsRequest)
-  })
+  Object.assign(http, { request: factory(originalHttpRequest) })
+  Object.assign(https, { request: factory(originalHttpsRequest) })
 
   __PATCHED__ = true
 }
