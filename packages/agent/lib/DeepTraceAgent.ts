@@ -95,12 +95,7 @@ class DeepTraceAgent {
     req: IncomingMessage,
     res: ServerResponse,
     fn: (context: IDeepTraceContext) => void
-  ): Promise<void>
-  public async bind<T>(
-    req: IncomingMessage,
-    res: ServerResponse,
-    fn: (context: IDeepTraceContext) => T
-  ): Promise<T> {
+  ): Promise<void> {
     const requestedAt = new Date()
 
     const trace = {
@@ -171,18 +166,18 @@ class DeepTraceAgent {
         }
 
         return this
-        .report(traceToBeReported, req, res)
-        .catch(
-          rethrow(err => {
-            this.debug(
-              'failed to report trace "%s": [%s] %s :: %s',
-              trace.id,
-              err.name,
-              err.message,
-              err.stack
-            )
-          })
-        )
+          .report(traceToBeReported, req, res)
+          .catch(
+            rethrow(err => {
+              this.debug(
+                'failed to report trace "%s": [%s] %s :: %s',
+                trace.id,
+                err.name,
+                err.message,
+                err.stack
+              )
+            })
+          )
       })
       .catch(() => {
         this.debug('aborted trace report "%s"', trace.id)
@@ -200,11 +195,14 @@ class DeepTraceAgent {
     domain.add(req)
     domain.add(res)
 
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       domain.on('error', reject)
 
       domain.run(() => {
-        resolve(fn(context))
+        Promise
+          .resolve(fn(context))
+          .then(() => resolve())
+          .catch(reject)
       })
     })
   }
