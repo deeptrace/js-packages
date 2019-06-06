@@ -15,7 +15,9 @@
     "tracing",
     "traces",
     "debug",
-    "microservices"
+    "microservices",
+    "express",
+    "koa"
   ],
   "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
