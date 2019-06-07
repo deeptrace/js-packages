@@ -22,4 +22,8 @@ npm install @deeptrace/appify-http
 
 ## How to use
 
-Comming soon...
+```sh
+appify-http src/api.js
+```
+
+Run `appify-http -h` for more info.

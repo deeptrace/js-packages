@@ -27,9 +27,9 @@ const configFactory = (
   return defaultsdeep(config, {
     tags: {
       app: null,
-      environment: process.env.NODE_ENV || 'development',
-      commit: null,
-      release: null,
+      environment: process.env.DEEPTRACE_ENVIRONMENT || process.env.NODE_ENV || 'development',
+      commit: process.env.DEEPTRACE_GIT_COMMIT || null,
+      release: process.env.DEEPTRACE_GIT_RELEASE || null,
       arch: process.arch,
       platform: process.platform as string,
       engine: `node/${process.versions.node}; v8/${process.versions.v8}`,

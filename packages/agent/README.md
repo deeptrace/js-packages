@@ -34,9 +34,19 @@ const options = {
 }
 
 const agent = new DeepTraceAgent(
-    new NativeHttpReporter({ dsn: new URL(process.env.DEEPTRACE_DSN) }),
+    new NativeHttpReporter({ dsn: process.env.DEEPTRACE_DSN }),
     options
 )
+```
+
+You can provide a `null`, which will prevent any trace to be reported.
+This is useful when DeepTrace's DSN wasn't provided.
+
+```js
+const reporter = process.env.DEEPTRACE_DSN
+    ? new NativeHttpReporter({ dsn: process.env.DEEPTRACE_DSN })
+    : null
+const agent = new DeepTraceAgent(reporter, options)
 ```
 
 As you can see, the first argument for `DeepTraceAgent` is an instance of a `Reporter`.

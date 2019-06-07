@@ -23,3 +23,5 @@ npm install @deeptrace/appify-server-builder
 ## How to use
 
 Comming soon...
+
+For now, you can see how [@deeptrace/appify-http](https://github.com/deeptrace/js-packages/blob/master/packages/appify-http/index.ts) was implemented.

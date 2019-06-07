@@ -20,10 +20,6 @@ Installation is done using the npm install command:
 npm install @deeptrace/commons
 ```
 
-## How to use
-
-Comming soon...
-
 
 ## Exported objects
 
