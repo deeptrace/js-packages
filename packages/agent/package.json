@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/agent",
   "description": "Agnostic traces reporter agent for Node.js",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "main": "dist/index.js",
   "files": [
     "dist/*.*",
@@ -52,7 +52,7 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
-    "@deeptrace/commons": "^1.0.23",
+    "@deeptrace/commons": "^1.0.25",
     "debug": "^4.1.1",
     "forwarded": "^0.1.2",
     "inflation": "^2.0.0",
