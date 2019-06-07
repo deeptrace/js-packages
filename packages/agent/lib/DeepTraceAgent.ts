@@ -19,7 +19,7 @@ import {
   IDeepTraceContext
 } from './types';
 import enableGlobalAutoContext from './enableGlobalAutoContext';
-import pkg from '../package.json';
+const pkg = require('../package.json');
 
 const configFactory = (
   config: IDeepTraceAgentConfigArg
