@@ -22,6 +22,7 @@ export interface ITrace {
     method: string;
     url: URL;
     headers: Headers;
+    query: Nullable<string>;
     body: Nullable<string>;
     timestamp: Date;
   };

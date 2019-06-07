@@ -171,7 +171,7 @@ export async function extractRequestInfo(
       port,
       pathname: requestUrl.pathname
     }),
-    search: requestUrl.search,
+    query: requestUrl.search || null,
     headers: req.headers,
     body
   };

@@ -19,6 +19,7 @@ import {
   IDeepTraceContext
 } from './types';
 import enableGlobalAutoContext from './enableGlobalAutoContext';
+import pkg from '../package.json';
 
 const configFactory = (
   config: IDeepTraceAgentConfigArg
@@ -31,7 +32,8 @@ const configFactory = (
       release: null,
       arch: process.arch,
       platform: process.platform as string,
-      engine: `node/${process.version}`
+      engine: `node/${process.versions.node}; v8/${process.versions.v8}`,
+      agent: `${pkg.name}@${pkg.version}`
     },
     disableGlobalAutoContext: false,
     beforeSend: (trace: ITrace) => trace,
