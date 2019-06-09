@@ -22,4 +22,3 @@ RUN installext ms-vscode.sublime-keybindings
 # Shared between host and container
 ##
 LABEL share.npmrc="~/.npmrc:~/.npmrc"
-LABEL share.gitconfig="~/.gitconfig:~/.gitconfig"
