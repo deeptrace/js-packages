@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/appify-server-builder",
   "description": "Build custom servers to run appify apps",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "main": "dist/index.js",
   "files": [
     "dist/*.*",
