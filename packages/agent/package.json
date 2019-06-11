@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/agent",
   "description": "Agnostic traces reporter agent for Node.js",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "main": "dist/index.js",
   "files": [
     "dist/*.*",
@@ -34,7 +34,7 @@
     "node": ">= 8.6.0"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist/ && tsc",
     "lint": "prettier -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
     "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
     "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive"
@@ -53,7 +53,7 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
-    "@deeptrace/commons": "^1.0.25",
+    "@deeptrace/commons": "^1.0.26",
     "debug": "^4.1.1",
     "forwarded": "^0.1.2",
     "inflation": "^2.0.0",

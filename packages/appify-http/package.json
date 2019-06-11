@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/appify-http",
   "description": "Native HTTP server for appify apps",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "main": "dist/index.js",
   "files": [
     "dist/*.*"
@@ -34,12 +34,13 @@
     "node": ">= 8.6.0"
   },
   "scripts": {
-    "build": "tsc && chmod +x dist/index.js",
+    "build": "rm -rf dist/ && tsc && chmod +x dist/index.js",
     "lint": "prettier -c index.ts lib/{**/,}*.ts",
-    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts"
+    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts",
+    "test": "exit 0"
   },
   "dependencies": {
-    "@deeptrace/appify-server-builder": "^1.0.25"
+    "@deeptrace/appify-server-builder": "^1.0.26"
   },
   "devDependencies": {
     "@types/debug": "^4.1.4",

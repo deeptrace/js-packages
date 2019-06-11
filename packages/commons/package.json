@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/commons",
   "description": "Objects shared accross projects",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "main": "dist/index.js",
   "files": [
     "dist/*.*",
@@ -31,9 +31,10 @@
     "node": ">= 8.6.0"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist/ && tsc",
     "lint": "prettier -c index.ts lib/{**/,}*.ts",
-    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts"
+    "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts",
+    "test": "exit 0"
   },
   "devDependencies": {
     "prettier": "^1.18.2",
