@@ -34,6 +34,7 @@
     "node": ">= 8.6.0"
   },
   "scripts": {
+    "build": "tsc",
     "lint": "prettier -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
     "lint:fix": "prettier --write -c index.ts lib/{**/,}*.ts test/{**/,}*.js",
     "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive"
@@ -48,7 +49,7 @@
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "nock": "^10.0.6",
-    "prettier": "^1.18.0",
+    "prettier": "^1.18.2",
     "typescript": "^3.5.1"
   },
   "dependencies": {
