@@ -173,7 +173,7 @@ export async function extractRequestInfo(
     }),
     query: requestUrl.search || null,
     headers: req.headers,
-    body
+    body: body || null
   };
 }
 
@@ -221,7 +221,7 @@ export async function interceptResponseInfo(
       resolve({
         status: res.statusCode,
         headers: { ...res.getHeaders() },
-        body: Buffer.concat(chunks).toString('utf-8'),
+        body: Buffer.concat(chunks).toString('utf-8') || null,
         timestamp: new Date()
       });
 

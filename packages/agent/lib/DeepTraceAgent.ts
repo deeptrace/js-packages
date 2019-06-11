@@ -1,4 +1,4 @@
-import { debug, Debugger } from 'debug';
+import { debug } from 'debug';
 import { create as createDomain } from 'domain';
 import defaultsdeep from 'lodash.defaultsdeep';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -46,7 +46,7 @@ const configFactory = (
 
 class DeepTraceAgent {
   protected reporter: Nullable<IReporter>;
-  protected debug: Debugger;
+  protected debug: debug.Debugger;
   protected config: IDeepTraceAgentConfig;
 
   constructor(
@@ -67,6 +67,7 @@ class DeepTraceAgent {
     req: IncomingMessage,
     res: ServerResponse
   ) {
+    console.log(trace)
     if (!this.reporter) {
       this.debug(
         'skiping trace report "%s" because no reporter was set',
