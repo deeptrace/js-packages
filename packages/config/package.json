@@ -28,19 +28,19 @@
     "build": "exit 0",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --recursive --throw-deprecation"
+    "test": "mocha test/{*,**/**}.test.js --check-leaks --exit --full-trace --recursive --throw-deprecation"
   },
   "engines": {
     "node": ">= 8.6.0"
   },
   "dependencies": {
     "@deeptrace/commons": "^1.0.27",
-    "sinon": "^7.3.2",
+    "sinon": "^7.5.0",
     "sugar-env": "^1.5.7"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "standard": "^12.0.1"
   }
 }

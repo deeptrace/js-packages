@@ -67,7 +67,6 @@ class DeepTraceAgent {
     req: IncomingMessage,
     res: ServerResponse
   ) {
-    console.log(trace)
     if (!this.reporter) {
       this.debug(
         'skiping trace report "%s" because no reporter was set',

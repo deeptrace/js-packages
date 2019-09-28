@@ -2,16 +2,17 @@
   "name": "@deeptrace/js-tools",
   "private": true,
   "scripts": {
-    "packages:audit": "lerna exec npm audit",
-    "packages:build": "lerna exec npm run build",
-    "packages:clear": "lerna exec 'rm -rf dist/ node_modules/'",
-    "packages:install": "lerna exec npm install",
-    "packages:link": "lerna link",
-    "packages:lint": "lerna exec npm run lint:fix",
-    "packages:prepare": "lerna exec 'npm run lint && npm run build && npm test'",
-    "packages:publish": "lerna publish",
-    "packages:test": "lerna exec npm test",
-    "packages:upgrade": "lerna exec npm upgrade"
+    "pkgs:audit": "lerna exec npm audit",
+    "pkgs:build": "lerna exec npm run build",
+    "pkgs:clear": "lerna exec 'rm -rf dist/ node_modules/'",
+    "pkgs:audit-fix": "lerna exec npm audit fix",
+    "pkgs:install": "lerna exec npm install",
+    "pkgs:link": "lerna link",
+    "pkgs:lint": "lerna exec npm run lint:fix",
+    "pkgs:prepare": "lerna exec 'npm run lint && npm run build && npm test'",
+    "pkgs:publish": "lerna publish",
+    "pkgs:test": "lerna exec npm test",
+    "pkgs:upgrade": "lerna exec npm upgrade"
   },
   "devDependencies": {
     "lerna": "^3.15.0"

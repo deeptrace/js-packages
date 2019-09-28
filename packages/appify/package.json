@@ -27,7 +27,7 @@
     "build": "exit 0",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "mocha test --check-leaks --exit --extension .test.js --full-trace --globals __SENTRY__ --recursive --throw-deprecation"
+    "test": "mocha test/{*,**/**}.test.js --check-leaks --exit --full-trace --globals __SENTRY__ --recursive --throw-deprecation"
   },
   "engines": {
     "node": ">= 8.6.0"
@@ -36,24 +36,24 @@
     "@deeptrace/agent": "^1.0.28",
     "@deeptrace/commons": "^1.0.27",
     "@deeptrace/config": "^1.0.27",
-    "@sentry/node": "^5.4.0",
+    "@sentry/node": "^5.6.2",
     "body-parser": "^1.19.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
-    "helmet": "^3.18.0",
-    "lodash.defaultsdeep": "^4.6.0",
+    "helmet": "^3.21.1",
+    "lodash.defaultsdeep": "^4.6.1",
     "morgan": "^1.9.1",
     "require-relative": "^0.8.7",
-    "yargs": "^13.2.4"
+    "yargs": "^13.3.0"
   },
   "optionalDependencies": {
     "@deeptrace/appify-http": "^1.0.27"
   },
   "devDependencies": {
-    "axiosist": "^0.6.1",
+    "axiosist": "^0.6.2",
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
-    "sinon": "^7.3.2",
+    "mocha": "^6.2.0",
+    "sinon": "^7.5.0",
     "standard": "^12.0.1"
   }
 }
