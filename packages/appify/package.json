@@ -42,9 +42,7 @@
     "express": "^4.17.1",
     "helmet": "^3.21.1",
     "lodash.defaultsdeep": "^4.6.1",
-    "morgan": "^1.9.1",
-    "require-relative": "^0.8.7",
-    "yargs": "^13.3.0"
+    "morgan": "^1.9.1"
   },
   "optionalDependencies": {
     "@deeptrace/appify-http": "^1.0.29"
