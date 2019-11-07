@@ -15,6 +15,6 @@
     "pkgs:upgrade": "lerna exec npm upgrade"
   },
   "devDependencies": {
-    "lerna": "^3.15.0"
+    "lerna": "^3.18.3"
   }
 }
