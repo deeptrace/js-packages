@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/config",
   "description": "Opinionated configuration helper",
-  "version": "1.0.30",
+  "version": "1.0.31-alpha.0",
   "main": "index.js",
   "publishConfig": {
     "access": "public"
@@ -34,7 +34,7 @@
     "node": ">= 8.6.0"
   },
   "dependencies": {
-    "@deeptrace/commons": "^1.0.30",
+    "@deeptrace/commons": "^1.0.31-alpha.0",
     "sinon": "^7.5.0",
     "sugar-env": "^1.5.7"
   },
