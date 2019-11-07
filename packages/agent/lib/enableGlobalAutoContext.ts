@@ -1,6 +1,7 @@
 import http, { OutgoingHttpHeaders } from 'http';
 import https from 'https';
 import {
+  // @ts-ignore
   ClientHttp2Session,
   ClientSessionRequestOptions,
   ClientHttp2Stream
@@ -14,9 +15,12 @@ export default function enableGlobalAutoContext(): void {
   const originalHttpRequest = http.request.bind(http);
   const originalHttpsRequest = https.request.bind(http);
 
+  // @ts-ignore
   if (ClientHttp2Session) {
+    // @ts-ignore
     const originalHttp2Request = ClientHttp2Session.prototype.request;
 
+    // @ts-ignore
     ClientHttp2Session.prototype.request = (
       headers?: OutgoingHttpHeaders | undefined,
       options?: ClientSessionRequestOptions | undefined

@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import url from 'url';
+import url, { UrlObject } from 'url';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 import { Nullable, IDeepTraceContext } from './types';
 import forwareded from 'forwarded';
@@ -93,26 +93,29 @@ const getProtocol = async (req: CustomRequest) => {
   return index !== -1 ? header.substring(0, index).trim() : header.trim();
 };
 
-const getHostAndPort = async (
+const getHostnameAndPort = async (
   req: CustomRequest
-): Promise<{ host: string | undefined; port: string | undefined }> => {
-  let host = getHeaderCaseInsesitive(req.headers, 'X-Forwarded-Host');
+): Promise<{ hostname?: string; port?: string }> => {
+  let hostname = getHeaderCaseInsesitive(req.headers, 'X-Forwarded-Host');
 
-  if (!host) {
-    host = getHeaderCaseInsesitive(req.headers, 'Host');
-  } else if (host.indexOf(',') !== -1) {
-    host = host.substring(0, host.indexOf(',')).trimRight();
+  if (!hostname) {
+    hostname = getHeaderCaseInsesitive(req.headers, 'Host');
+  } else if (hostname.indexOf(',') !== -1) {
+    hostname = hostname.substring(0, hostname.indexOf(',')).trimRight();
   }
 
-  if (!host) return { host: undefined, port: undefined };
+  if (!hostname) return {};
 
   // IPv6 literal support
-  const offset = host[0] === '[' ? host.indexOf(']') + 1 : 0;
-  const index = host.indexOf(':', offset);
+  const offset = hostname[0] === '[' ? hostname.indexOf(']') + 1 : 0;
+  const index = hostname.indexOf(':', offset);
 
   return index !== -1
-    ? { host: host.substring(0, index), port: host.substring(index + 1) }
-    : { host, port: undefined };
+    ? {
+        hostname: hostname.substring(0, index),
+        port: hostname.substring(index + 1)
+      }
+    : { hostname };
 };
 
 const getClientIP = async (req: CustomRequest) => {
@@ -133,9 +136,9 @@ export async function extractRequestInfo(
   context: IDeepTraceContext,
   requestBodySizeLimit: string
 ) {
-  const [protocol, { host, port }, body] = await Promise.all([
+  const [protocol, hostnameAndPort, body] = await Promise.all([
     getProtocol(req as CustomRequest),
-    getHostAndPort(req as CustomRequest),
+    getHostnameAndPort(req as CustomRequest),
     (async () => {
       if (req.hasOwnProperty('body')) {
         return stringify(req.body);
@@ -165,12 +168,11 @@ export async function extractRequestInfo(
 
   return {
     method: req.method,
-    url: url.format({
+    url: {
+      ...hostnameAndPort,
       protocol,
-      hostname: host,
-      port,
       pathname: requestUrl.pathname
-    }),
+    } as UrlObject,
     query: requestUrl.search || null,
     headers: req.headers,
     body: body || null
@@ -197,8 +199,8 @@ export async function interceptResponseInfo(
     function write(chunk: any, encoding: string, cb?: WriteCb): boolean;
     function write(chunk: any, ...args: any[]): boolean {
       const encoding = typeof args[0] === 'string' ? args[0] : undefined;
-
       chunks.push(iWantABuffer(chunk, encoding));
+
       return originalWrite(chunk, ...args);
     }
 

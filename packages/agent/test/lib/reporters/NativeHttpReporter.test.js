@@ -24,7 +24,7 @@ describe('@deeptrace/agent', () => {
       const reporter = new NativeHttpReporter({
         dsn: new URL('https://foo:bar@api.deeptrace.io/'),
         headers: { foo: 'bar' },
-        timeout: 1000
+        timeout: 50
       });
 
       const request = nock('https://api.deeptrace.io:443/')
@@ -33,14 +33,14 @@ describe('@deeptrace/agent', () => {
         .matchHeader('foo', 'bar')
         .post('/traces', JSON.stringify(trace))
         .once()
-        .socketDelay(2000)
+        .socketDelay(100)
         .reply(204);
 
       let error = null;
 
-      await reporter.report(trace).catch(err => {
-        error = err;
-      });
+      await reporter
+        .report(trace)
+        .catch(err => { error = err });
 
       expect(request.isDone()).to.be.equals(true);
       expect(error).to.not.be.equals(null);
