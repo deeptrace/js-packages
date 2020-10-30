@@ -36,17 +36,17 @@
     "test": "exit 0"
   },
   "dependencies": {
-    "debug": "^4.1.1",
+    "debug": "^4.2.0",
     "require-relative": "^0.8.7",
-    "sugar-env": "^1.5.7",
+    "sugar-env": "^1.5.13",
     "yargs": "^13.3.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
-    "@types/node": "^12.7.8",
+    "@types/node": "^14.14.6",
     "@types/require-relative": "^0.8.0",
-    "@types/yargs": "^13.0.3",
-    "prettier": "^1.18.2",
-    "typescript": "^3.6.3"
+    "@types/yargs": "^15.0.9",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
   }
 }
