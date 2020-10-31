@@ -1,7 +1,7 @@
 {
   "name": "@deeptrace/appify-http",
   "description": "Native HTTP server for appify apps",
-  "version": "1.0.31-alpha.0",
+  "version": "1.0.32-alpha.0",
   "main": "dist/index.js",
   "files": [
     "dist/*.*"
@@ -40,7 +40,7 @@
     "test": "exit 0"
   },
   "dependencies": {
-    "@deeptrace/appify-server-builder": "^1.0.31-alpha.0"
+    "@deeptrace/appify-server-builder": "^1.0.32-alpha.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
