@@ -16,7 +16,7 @@ export default function enableGlobalAutoContext(): void {
   const originalHttpsRequest = https.request.bind(http);
 
   // @ts-ignore
-  if (ClientHttp2Session) {
+  if (typeof ClientHttp2Session == 'function') {
     // @ts-ignore
     const originalHttp2Request = ClientHttp2Session.prototype.request;
 

@@ -45,6 +45,7 @@
     "@types/inflation": "^2.0.0",
     "@types/lodash.defaultsdeep": "^4.6.6",
     "@types/node": "^14.14.6",
+    "@types/raw-body": "^2.3.0",
     "@types/uuid": "^8.3.0",
     "chai": "^4.2.0",
     "mocha": "^8.2.0",

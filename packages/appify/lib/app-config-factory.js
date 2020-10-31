@@ -30,9 +30,8 @@ module.exports = halt((options, environment) => {
         },
         beforeSend: (trace) => trace
       },
-      helmet: {
-        noCache: true
-      },
+      helmet: {},
+      nocache: true,
       morgan: {
         format: env('APPIFY_MORGAN_FORMAT', [ is.defaultTo(':method :url :status :: :response-time ms :: :res[deeptrace-request-id]') ])
       },

@@ -42,7 +42,8 @@
     "express": "^4.17.1",
     "helmet": "^4.1.1",
     "lodash.defaultsdeep": "^4.6.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nocache": "^2.1.0"
   },
   "optionalDependencies": {
     "@deeptrace/appify-http": "^1.0.31-alpha.0"
@@ -52,6 +53,6 @@
     "chai": "^4.2.0",
     "mocha": "^8.2.0",
     "sinon": "^9.2.1",
-    "standard": "^16.0.0"
+    "standard": "^16.0.1"
   }
 }

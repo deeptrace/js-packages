@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import url, { UrlObject } from 'url';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 import { Nullable, IDeepTraceContext } from './types';
