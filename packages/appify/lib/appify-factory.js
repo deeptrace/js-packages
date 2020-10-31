@@ -49,6 +49,7 @@ module.exports = function factory (fn) {
     app.use(middlewares.parsers.urlencoded())
     app.use(middlewares.parsers.json())
     app.use(middlewares.helmet(config.helmet))
+    app.use(middlewares.nocache(config.nocache))
 
     await Promise.resolve(fn({ router, config, environment, logger, ...props }))
 

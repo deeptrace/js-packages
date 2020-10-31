@@ -33,7 +33,7 @@ describe('@deeptrace/agent', () => {
         .matchHeader('foo', 'bar')
         .post('/traces', JSON.stringify(trace))
         .once()
-        .socketDelay(100)
+        .delayConnection(100)
         .reply(204);
 
       let error = null;

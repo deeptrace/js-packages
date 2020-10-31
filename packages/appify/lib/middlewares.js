@@ -4,6 +4,7 @@ module.exports = {
   deeptrace: require('./middlewares/deeptrace.js'),
   helmet: require('./middlewares/helmet.js'),
   morgan: require('./middlewares/morgan.js'),
+  nocache: require('./middlewares/nocache.js'),
   normalizer: require('./middlewares/normalizer.js'),
   parsers: {
     json: require('./middlewares/parser-json.js'),
