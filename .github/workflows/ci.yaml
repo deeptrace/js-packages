@@ -23,6 +23,5 @@ jobs:
     - run: npm run pkgs:build
     - run: npm run pkgs:link
     - run: npm run pkgs:test
-    - run: npm test
       env:
         CI: true
